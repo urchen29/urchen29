@@ -364,6 +364,70 @@ header{
 .kontakt .eyebrow{ color:#E8B79F; }
 
 /* ============================================================
+   ANFRAGEFORMULAR
+   ============================================================ */
+.formular{
+  max-width:560px;
+  margin:0 auto;
+  text-align:left;
+}
+/* Zwei Felder nebeneinander (z.B. Anreise + Abreise) */
+.feld-reihe{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+@media (max-width:520px){ .feld-reihe{ grid-template-columns:1fr; } }
+
+.feld{ margin-bottom:14px; }
+.feld label{
+  display:block;
+  font-size:.85rem; font-weight:700;
+  color:#E8B79F;
+  margin-bottom:6px;
+  letter-spacing:.02em;
+}
+.feld input,
+.feld select,
+.feld textarea{
+  width:100%;
+  font-family:var(--body);
+  font-size:1rem;
+  color:var(--tinte);
+  background:var(--papier);
+  border:none;
+  border-radius:10px;
+  padding:12px 14px;
+}
+.feld textarea{ resize:vertical; min-height:110px; }
+.feld input:focus,
+.feld select:focus,
+.feld textarea:focus{
+  outline:3px solid var(--terracotta);
+}
+.formular .btn{
+  width:100%;
+  border:none; cursor:pointer;
+  font-family:var(--body);
+  margin-top:6px;
+}
+/* Statusmeldung nach dem Absenden (Erfolg/Fehler) */
+.form-status{
+  margin-top:16px;
+  font-weight:700;
+  display:none;
+}
+.form-status.ok{ display:block; color:#A8D5B5; }
+.form-status.fehler{ display:block; color:#F0B4A0; }
+
+.mail-alternative{
+  margin-top:22px;
+  font-size:.9rem;
+  color:rgba(251,247,240,.7);
+}
+.mail-alternative a{ color:#E8B79F; }
+
+/* ============================================================
    9) FOOTER
    ============================================================ */
 footer{
@@ -555,7 +619,77 @@ footer a{ color:rgba(251,247,240,.7); }
       <span class="en">Just send us your preferred dates and the number of guests –
       we'll get back to you shortly with all the details.</span>
     </p>
-    <a class="btn" href="mailto:urchen29@gmail.com?subject=Anfrage%20Urchen%2029"><span class="de">E-Mail-Anfrage senden</span><span class="en">Send an email enquiry</span></a>
+    <!-- ============================================================
+         ANFRAGEFORMULAR (läuft über Formspree)
+         WICHTIG - EINMALIGE EINRICHTUNG:
+         1. Kostenloses Konto auf https://formspree.io anlegen
+            (mit urchen29@gmail.com registrieren)
+         2. "New Form" anlegen -> du bekommst eine ID wie "xabcdefg"
+         3. Unten im action-Attribut DEINE-FORMSPREE-ID ersetzen
+         Ohne diesen Schritt zeigt das Formular eine Fehlermeldung!
+         ============================================================ -->
+    <form class="formular" id="anfrage-formular"
+          action="https://formspree.io/f/xrevobna" method="POST">
+
+      <div class="feld">
+        <label for="f-name"><span class="de">Name</span><span class="en">Name</span></label>
+        <input type="text" id="f-name" name="Name" required autocomplete="name">
+      </div>
+
+      <div class="feld">
+        <label for="f-email"><span class="de">E-Mail-Adresse</span><span class="en">Email address</span></label>
+        <input type="email" id="f-email" name="E-Mail" required autocomplete="email">
+      </div>
+
+      <div class="feld-reihe">
+        <div class="feld">
+          <label for="f-anreise"><span class="de">Anreise</span><span class="en">Check-in</span></label>
+          <input type="date" id="f-anreise" name="Anreise" required>
+        </div>
+        <div class="feld">
+          <label for="f-abreise"><span class="de">Abreise</span><span class="en">Check-out</span></label>
+          <input type="date" id="f-abreise" name="Abreise" required>
+        </div>
+      </div>
+
+      <div class="feld">
+        <label for="f-gaeste"><span class="de">Anzahl Gäste</span><span class="en">Number of guests</span></label>
+        <select id="f-gaeste" name="Gaeste" required>
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+
+      <div class="feld">
+        <label for="f-nachricht"><span class="de">Nachricht (optional)</span><span class="en">Message (optional)</span></label>
+        <textarea id="f-nachricht" name="Nachricht"></textarea>
+      </div>
+
+      <!-- Honeypot-Falle gegen Spam-Bots: Menschen sehen dieses Feld
+           nicht und lassen es leer - Bots füllen es aus und fliegen raus -->
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+      <button class="btn" type="submit">
+        <span class="de">Anfrage senden</span><span class="en">Send enquiry</span>
+      </button>
+
+      <!-- Statusmeldungen: JS blendet je nach Ergebnis die richtige ein -->
+      <div class="form-status" id="form-ok">
+        <span class="de">Vielen Dank! Eure Anfrage ist unterwegs – wir melden uns rasch.</span>
+        <span class="en">Thank you! Your enquiry is on its way – we'll get back to you shortly.</span>
+      </div>
+      <div class="form-status" id="form-fehler">
+        <span class="de">Hoppla, das hat nicht geklappt. Bitte schreibt uns direkt per E-Mail.</span>
+        <span class="en">Oops, something went wrong. Please email us directly instead.</span>
+      </div>
+    </form>
+
+    <p class="mail-alternative">
+      <span class="de">Oder direkt per E-Mail an</span><span class="en">Or email us directly at</span>
+      <a href="mailto:urchen29@gmail.com?subject=Anfrage%20Urchen%2029">urchen29@gmail.com</a>
+    </p>
   </div>
 </section>
 
@@ -675,6 +809,52 @@ function setLang(lang){
     setLang(browserLang.indexOf('de') === 0 ? 'de' : 'en');
   }
 })();
+</script>
+
+<!-- ============================================================
+     JAVASCRIPT: ANFRAGEFORMULAR
+     Schickt die Formulardaten im Hintergrund an Formspree
+     ("AJAX"), ohne die Seite zu verlassen, und zeigt danach
+     eine Erfolgs- oder Fehlermeldung an.
+     ============================================================ -->
+<script>
+var formular   = document.getElementById('anfrage-formular');
+var meldungOk     = document.getElementById('form-ok');
+var meldungFehler = document.getElementById('form-fehler');
+
+formular.addEventListener('submit', function(e){
+  e.preventDefault();                    // verhindert den normalen Seitenwechsel
+  meldungOk.classList.remove('ok');
+  meldungFehler.classList.remove('fehler');
+
+  // Plausibilitätscheck: Abreise muss nach Anreise liegen
+  var anreise = document.getElementById('f-anreise').value;
+  var abreise = document.getElementById('f-abreise').value;
+  if (anreise && abreise && abreise <= anreise) {
+    alert(document.documentElement.getAttribute('data-lang') === 'de'
+      ? 'Die Abreise muss nach der Anreise liegen.'
+      : 'Check-out must be after check-in.');
+    return;
+  }
+
+  // fetch() schickt die Daten im Hintergrund an Formspree
+  fetch(formular.action, {
+    method:'POST',
+    body:new FormData(formular),
+    headers:{ 'Accept':'application/json' }
+  })
+  .then(function(antwort){
+    if (antwort.ok) {
+      formular.reset();                  // Felder leeren
+      meldungOk.classList.add('ok');     // Erfolgsmeldung zeigen
+    } else {
+      meldungFehler.classList.add('fehler');
+    }
+  })
+  .catch(function(){
+    meldungFehler.classList.add('fehler');
+  });
+});
 </script>
 
 </body>
