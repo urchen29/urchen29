@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,6 +76,34 @@ a:focus-visible, button:focus-visible{
 }
 
 /* ============================================================
+   SPRACHUMSCHALTUNG (DE/EN)
+   So funktioniert's: Jeder Text existiert zweimal im HTML –
+   einmal mit class="de", einmal mit class="en". Das data-lang-
+   Attribut am <html>-Element bestimmt, welche Version sichtbar
+   ist. Der Button oben rechts wechselt nur dieses eine Attribut.
+   ============================================================ */
+html[data-lang="de"] .en{ display:none !important; }
+html[data-lang="en"] .de{ display:none !important; }
+
+.lang-toggle{
+  display:flex; align-items:center; gap:2px;
+  margin-left:24px;
+}
+.lang-toggle button{
+  background:none; border:none; cursor:pointer;
+  font-family:var(--body); font-weight:700; font-size:.9rem;
+  color:var(--stein);
+  padding:4px 7px; border-radius:6px;
+}
+.lang-toggle button:hover{ color:var(--terracotta); }
+.lang-toggle button.active{
+  color:#fff;
+  background:var(--tanne);
+}
+.lang-toggle > span{ color:rgba(47,74,60,.3); font-weight:700; }
+.nav-right{ display:flex; align-items:center; }
+
+/* ============================================================
    2) NAVIGATION
    ============================================================ */
 header{
@@ -101,9 +129,12 @@ header{
   font-weight:600; font-size:.95rem;
 }
 .nav ul a:hover{ color:var(--terracotta); }
-/* Auf schmalen Handys blenden wir die Menüpunkte aus –
-   die Seite ist kurz genug zum Scrollen */
-@media (max-width:640px){ .nav ul{ display:none; } }
+/* Auf schmalen Handys: Menüpunkte ausblenden,
+   der Sprachumschalter bleibt aber sichtbar */
+@media (max-width:640px){
+  .nav ul{ display:none; }
+  .lang-toggle{ margin-left:0; }
+}
 
 /* ============================================================
    3) HERO – der erste Eindruck
@@ -218,6 +249,62 @@ header{
 }
 .foto.tall{ aspect-ratio:3/4; }
 
+/* ============================================================
+   LIGHTBOX (Bild-Vergrößerung beim Klick)
+   Die Lightbox ist ein unsichtbares Overlay über der ganzen
+   Seite. Per JavaScript bekommt sie die Klasse "offen" und
+   wird sichtbar – mit dem angeklickten Bild in groß.
+   ============================================================ */
+.foto{ cursor:zoom-in; }            /* Lupe-Cursor signalisiert: klickbar */
+
+.lightbox{
+  position:fixed; inset:0;          /* füllt das ganze Browserfenster */
+  z-index:100;
+  background:rgba(35,58,47,.93);    /* dunkles Tannengrün, leicht durchscheinend */
+  display:none;                     /* standardmäßig unsichtbar */
+  align-items:center; justify-content:center;
+  padding:24px;
+}
+.lightbox.offen{ display:flex; }    /* JS schaltet diese Klasse an/aus */
+
+.lightbox img{
+  max-width:min(1100px, 92vw);
+  max-height:82vh;
+  border-radius:12px;
+  box-shadow:0 24px 80px rgba(0,0,0,.45);
+}
+
+/* Bildunterschrift (kommt aus dem alt-Text des Bildes) */
+.lb-titel{
+  position:absolute; bottom:28px; left:0; right:0;
+  text-align:center;
+  color:rgba(251,247,240,.85);
+  font-size:.95rem; font-weight:600;
+  pointer-events:none;
+}
+
+/* Die drei Buttons: Schließen, Zurück, Weiter */
+.lightbox button{
+  position:absolute;
+  background:rgba(251,247,240,.12);
+  border:none; cursor:pointer;
+  color:var(--papier);
+  font-size:1.6rem; line-height:1;
+  width:48px; height:48px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  transition:background .15s ease;
+}
+.lightbox button:hover{ background:rgba(251,247,240,.28); }
+.lb-schliessen{ top:20px; right:20px; }
+.lb-zurueck{ left:16px; top:50%; transform:translateY(-50%); }
+.lb-weiter{ right:16px; top:50%; transform:translateY(-50%); }
+
+@media (max-width:640px){
+  .lb-zurueck{ left:6px; }
+  .lb-weiter{ right:6px; }
+}
+
 .amenities{
   list-style:none;
   display:grid; grid-template-columns:1fr 1fr;
@@ -304,24 +391,39 @@ footer a{ color:rgba(251,247,240,.7); }
       </svg>
       Urchen 29
     </a>
-    <ul>
-      <li><a href="#wohnung">Die Wohnung</a></li>
-      <li><a href="#galerie">Bilder</a></li>
-      <li><a href="#lage">Lage</a></li>
-      <li><a href="#kontakt">Anfragen</a></li>
-    </ul>
+    <div class="nav-right">
+      <ul>
+        <li><a href="#wohnung"><span class="de">Die Wohnung</span><span class="en">The Apartment</span></a></li>
+        <li><a href="#galerie"><span class="de">Bilder</span><span class="en">Photos</span></a></li>
+        <li><a href="#lage"><span class="de">Lage</span><span class="en">Location</span></a></li>
+        <li><a href="#kontakt"><span class="de">Anfragen</span><span class="en">Enquire</span></a></li>
+      </ul>
+      <!-- Sprachumschalter: ruft die Funktion setLang() unten auf -->
+      <div class="lang-toggle" role="group" aria-label="Sprache wählen / Choose language">
+        <button id="btn-de" onclick="setLang('de')" aria-label="Deutsch">DE</button>
+        <span>|</span>
+        <button id="btn-en" onclick="setLang('en')" aria-label="English">EN</button>
+      </div>
+    </div>
   </nav>
 </header>
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
   <div class="hero-inner">
-    <span class="eyebrow">Maria Alm am Steinernen Meer · Region Hochkönig</span>
-    <h1>Ankommen.<br>Durchatmen.<br>Daheim sein.</h1>
-    <p>Urchen 29 ist eure gemütliche Ferienwohnung in Maria Alm –
-       eingerichtet mit Liebe, umgeben von Bergen, das ganze Jahr ein Platz zum Wohlfühlen.</p>
-    <a class="btn" href="#kontakt">Jetzt anfragen</a>
-    <a class="btn ghost" href="#wohnung">Mehr erfahren</a>
+    <span class="eyebrow">Maria Alm am Steinernen Meer · <span class="de">Region Hochkönig</span><span class="en">Hochkönig Region, Austria</span></span>
+    <h1>
+      <span class="de">Ankommen.<br>Durchatmen.<br>Daheim sein.</span>
+      <span class="en">Arrive.<br>Breathe.<br>Feel at home.</span>
+    </h1>
+    <p>
+      <span class="de">Urchen 29 ist eure gemütliche Ferienwohnung in Maria Alm –
+      eingerichtet mit Liebe, umgeben von Bergen, das ganze Jahr ein Platz zum Wohlfühlen.</span>
+      <span class="en">Urchen 29 is your cosy holiday apartment in Maria Alm –
+      furnished with love, surrounded by mountains, a place to feel at home all year round.</span>
+    </p>
+    <a class="btn" href="#kontakt"><span class="de">Jetzt anfragen</span><span class="en">Enquire now</span></a>
+    <a class="btn ghost" href="#wohnung"><span class="de">Mehr erfahren</span><span class="en">Learn more</span></a>
   </div>
 
   <!-- Die Bergsilhouette – inspiriert vom Steinernen Meer -->
@@ -337,10 +439,10 @@ footer a{ color:rgba(251,247,240,.7); }
 <!-- Eckdaten aus dem Airbnb-Inserat übernommen -->
 <div class="facts">
   <div class="wrap">
-    <div class="fact"><strong>4</strong><span>Gäste</span></div>
-    <div class="fact"><strong>4</strong><span>Betten</span></div>
-    <div class="fact"><strong>200&nbsp;m</strong><span>zum Skilift</span></div>
-    <div class="fact"><strong>Gratis</strong><span>WLAN &amp; Parkplatz</span></div>
+    <div class="fact"><strong>4</strong><span><span class="de">Gäste</span><span class="en">Guests</span></span></div>
+    <div class="fact"><strong>4</strong><span><span class="de">Betten</span><span class="en">Beds</span></span></div>
+    <div class="fact"><strong>200&nbsp;m</strong><span><span class="de">zum Skilift</span><span class="en">to the ski lift</span></span></div>
+    <div class="fact"><strong><span class="de">Gratis</span><span class="en">Free</span></strong><span><span class="de">WLAN &amp; Parkplatz</span><span class="en">Wi-Fi &amp; parking</span></span></div>
   </div>
 </div>
 
@@ -348,57 +450,62 @@ footer a{ color:rgba(251,247,240,.7); }
 <section id="wohnung">
   <div class="wrap split">
     <div>
-      <span class="eyebrow">Die Wohnung</span>
-      <h2>Alpiner Charme trifft modernen Komfort</h2>
-      <p>Unsere Wohnung verbindet warmes Holz und alpine Gemütlichkeit mit allem,
-         was ihr für einen entspannten Urlaub braucht – vom Skitag im Winter
-         bis zur Wanderung im Sommer.</p>
+      <span class="eyebrow"><span class="de">Die Wohnung</span><span class="en">The Apartment</span></span>
+      <h2><span class="de">Alpiner Charme trifft modernen Komfort</span><span class="en">Alpine charm meets modern comfort</span></h2>
+      <p>
+        <span class="de">Unsere Wohnung verbindet warmes Holz und alpine Gemütlichkeit mit allem,
+        was ihr für einen entspannten Urlaub braucht – vom Skitag im Winter
+        bis zur Wanderung im Sommer.</span>
+        <span class="en">Our apartment combines warm wood and alpine cosiness with everything
+        you need for a relaxed holiday – from ski days in winter
+        to hiking adventures in summer.</span>
+      </p>
       <!-- Ausstattung laut Airbnb-Inserat -->
       <ul class="amenities">
-        <li>Helle Wohnküche</li>
-        <li>Schnelles WLAN</li>
-        <li>Balkon mit Bergblick</li>
-        <li>Doppel- &amp; Etagenbett oder Schlafcouch</li>
-        <li>Privater Skiraum</li>
-        <li>Eigener Parkplatz</li>
-        <li>Self-Check-in (Schlüsselbox)</li>
-        <li>Bettwäsche &amp; Handtücher</li>
+        <li><span class="de">Helle Wohnküche</span><span class="en">Bright kitchen-living area</span></li>
+        <li><span class="de">Schnelles WLAN</span><span class="en">Fast Wi-Fi</span></li>
+        <li><span class="de">Balkon mit Bergblick</span><span class="en">Balcony with mountain view</span></li>
+        <li><span class="de">Doppel- &amp; Etagenbett oder Schlafcouch</span><span class="en">Double &amp; bunk bed or sofa bed</span></li>
+        <li><span class="de">Privater Skiraum</span><span class="en">Private ski room</span></li>
+        <li><span class="de">Eigener Parkplatz</span><span class="en">Private parking space</span></li>
+        <li><span class="de">Self-Check-in (Schlüsselbox)</span><span class="en">Self check-in (key box)</span></li>
+        <li><span class="de">Bettwäsche &amp; Handtücher</span><span class="en">Bed linen &amp; towels</span></li>
       </ul>
     </div>
     <!-- Wohnzimmer-Foto aus dem Airbnb-Inserat -->
     <img class="foto tall" loading="lazy"
-         src="https://a0.muscache.com/im/pictures/hosting/Hosting-1556444978113642901/original/e65dcbdf-2b11-41a8-a839-f93e720389b8.png?im_w=1200"
-         alt="Heller Wohnbereich mit offener Küche in der Ferienwohnung Urchen 29">
+         src="bilder/Main.jpg"
+         alt="Heller Wohnbereich mit offener Küche">
   </div>
 </section>
 
 <!-- ================= GALERIE ================= -->
 <section class="galerie" id="galerie">
   <div class="wrap">
-    <span class="eyebrow">Eindrücke</span>
-    <h2>Ein erster Blick hinein</h2>
+    <span class="eyebrow"><span class="de">Eindrücke</span><span class="en">Impressions</span></span>
+    <h2><span class="de">Ein erster Blick hinein</span><span class="en">A first look inside</span></h2>
     <div class="grid-3">
       <!-- Fotos aus dem Airbnb-Inserat. Die Reihenfolge kannst du frei
            tauschen – einfach die <img>-Blöcke verschieben.
            Passe auch die alt-Texte an, falls ein Bild etwas anderes zeigt. -->
       <img class="foto" loading="lazy"
            src="bilder/Main.jpg"
-           alt="Schlafzimmer mit Kingsize-Bett und Etagenbett">
+           alt="Essbereich">
       <img class="foto" loading="lazy"
            src="bilder/Wohnzimmer.jpg"
-           alt="Eindruck aus der Ferienwohnung Urchen 29">
+           alt="Wohnbereich">
       <img class="foto" loading="lazy"
-           src="bilder/Küche.jpg"
-           alt="Eindruck aus der Ferienwohnung Urchen 29">
+           src="bilder/Kueche.jpg"
+           alt="Küche">
       <img class="foto" loading="lazy"
            src="bilder/Schlafzimmer.jpg"
-           alt="Eindruck aus der Ferienwohnung Urchen 29">
+           alt="Schlafzimmer mit Doppelbett & Stockbett">
       <img class="foto" loading="lazy"
            src="bilder/Bad.jpg"
-           alt="Eindruck aus der Ferienwohnung Urchen 29">
+           alt="Bad">
       <img class="foto" loading="lazy"
            src="bilder/Balkon.jpg"
-           alt="Eindruck aus der Ferienwohnung Urchen 29">
+           alt="Balkon">
     </div>
   </div>
 </section>
@@ -406,11 +513,16 @@ footer a{ color:rgba(251,247,240,.7); }
 <!-- ================= LAGE ================= -->
 <section id="lage">
   <div class="wrap">
-    <span class="eyebrow">Die Lage</span>
-    <h2>Mitten in der Region Hochkönig</h2>
-    <p>Maria Alm liegt auf rund 800&nbsp;m Seehöhe am Fuß des Steinernen Meeres –
-       im Winter direkt im Skigebiet Hochkönig, im Sommer Ausgangspunkt für
-       Wanderungen, Radtouren und Badeseen im Salzburger Land.</p>
+    <span class="eyebrow"><span class="de">Die Lage</span><span class="en">Location</span></span>
+    <h2><span class="de">Mitten in der Region Hochkönig</span><span class="en">In the heart of the Hochkönig region</span></h2>
+    <p>
+      <span class="de">Maria Alm liegt auf rund 800&nbsp;m Seehöhe am Fuß des Steinernen Meeres –
+      im Winter direkt im Skigebiet Hochkönig, im Sommer Ausgangspunkt für
+      Wanderungen, Radtouren und Badeseen im Salzburger Land.</span>
+      <span class="en">Maria Alm sits at around 800&nbsp;m above sea level at the foot of the
+      Steinernes Meer massif – right in the Hochkönig ski area in winter, and a
+      perfect base for hiking, cycling and lake swimming in summer.</span>
+    </p>
 
     <!-- GOOGLE-MAPS-KARTE EINBETTEN:
          1. Auf Google Maps eure Adresse suchen
@@ -423,11 +535,11 @@ footer a{ color:rgba(251,247,240,.7); }
 
     <!-- Entfernungen laut Airbnb-Inserat -->
     <ul class="lage-liste">
-      <li><span>Skilift (Skigebiet Hochkönig)</span><span>ca. 200 m</span></li>
-      <li><span>Ortszentrum Maria Alm</span><span>ca. 5 Min. zu Fuß</span></li>
-      <li><span>Zell am See</span><span>ca. 15 Min. mit dem Auto</span></li>
-      <li><span>Leogang (Skigebiet &amp; Bikepark)</span><span>ca. 15 Min. mit dem Auto</span></li>
-      <li><span>Salzburg</span><span>ca. 1 Std. mit dem Auto</span></li>
+      <li><span><span class="de">Skilift (Skigebiet Hochkönig)</span><span class="en">Ski lift (Hochkönig ski area)</span></span><span><span class="de">ca. 200 m</span><span class="en">approx. 200 m</span></span></li>
+      <li><span><span class="de">Ortszentrum Maria Alm</span><span class="en">Maria Alm village centre</span></span><span><span class="de">ca. 5 Min. zu Fuß</span><span class="en">approx. 5 min on foot</span></span></li>
+      <li><span>Zell am See</span><span><span class="de">ca. 15 Min. mit dem Auto</span><span class="en">approx. 15 min by car</span></span></li>
+      <li><span><span class="de">Leogang (Skigebiet &amp; Bikepark)</span><span class="en">Leogang (ski area &amp; bike park)</span></span><span><span class="de">ca. 15 Min. mit dem Auto</span><span class="en">approx. 15 min by car</span></span></li>
+      <li><span>Salzburg</span><span><span class="de">ca. 1 Std. mit dem Auto</span><span class="en">approx. 1 hr by car</span></span></li>
     </ul>
   </div>
 </section>
@@ -435,11 +547,15 @@ footer a{ color:rgba(251,247,240,.7); }
 <!-- ================= KONTAKT ================= -->
 <section class="kontakt" id="kontakt">
   <div class="wrap">
-    <span class="eyebrow">Anfrage</span>
-    <h2>Wir freuen uns auf euch</h2>
-    <p>Schreibt uns einfach eure Wunschtermine und die Anzahl der Gäste –
-       wir melden uns rasch mit allen Details zurück.</p>
-    <a class="btn" href="mailto:urchen29@gmail.com?subject=Anfrage%20Urchen%2029">E-Mail-Anfrage senden</a>
+    <span class="eyebrow"><span class="de">Anfrage</span><span class="en">Enquiry</span></span>
+    <h2><span class="de">Wir freuen uns auf euch</span><span class="en">We look forward to welcoming you</span></h2>
+    <p>
+      <span class="de">Schreibt uns einfach eure Wunschtermine und die Anzahl der Gäste –
+      wir melden uns rasch mit allen Details zurück.</span>
+      <span class="en">Just send us your preferred dates and the number of guests –
+      we'll get back to you shortly with all the details.</span>
+    </p>
+    <a class="btn" href="mailto:urchen29@gmail.com?subject=Anfrage%20Urchen%2029"><span class="de">E-Mail-Anfrage senden</span><span class="en">Send an email enquiry</span></a>
   </div>
 </section>
 
@@ -447,9 +563,119 @@ footer a{ color:rgba(251,247,240,.7); }
 <footer>
   <div class="wrap">
     <span>© 2026 Urchen 29 · Maria Alm am Steinernen Meer</span>
-    <span><a href="impressum.html">Impressum</a> · <a href="impressum.html#datenschutz">Datenschutz</a></span>
+    <span><a href="impressum.html"><span class="de">Impressum</span><span class="en">Legal notice</span></a> · <a href="impressum.html#datenschutz"><span class="de">Datenschutz</span><span class="en">Privacy</span></a></span>
   </div>
 </footer>
+
+<!-- ================= LIGHTBOX ================= -->
+<!-- Dieses Overlay ist anfangs unsichtbar. Klickt jemand auf ein
+     Foto, füllt das JavaScript unten das <img> und blendet es ein. -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Bildansicht">
+  <button class="lb-schliessen" onclick="lbSchliessen()" aria-label="Schließen">×</button>
+  <button class="lb-zurueck" onclick="lbBlaettern(-1)" aria-label="Vorheriges Bild">‹</button>
+  <img id="lb-bild" src="" alt="">
+  <button class="lb-weiter" onclick="lbBlaettern(1)" aria-label="Nächstes Bild">›</button>
+  <div class="lb-titel" id="lb-titel"></div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT: LIGHTBOX
+     So funktioniert's:
+     1. Beim Laden sammeln wir alle Bilder mit der Klasse "foto"
+        in einer Liste und geben jedem einen Klick-Befehl
+     2. Ein Klick merkt sich die Position des Bildes in der Liste
+        und zeigt es groß im Overlay
+     3. Mit den Pfeilen (oder Pfeiltasten) blättert man durch,
+        Escape oder ein Klick auf den Hintergrund schließt
+     ============================================================ -->
+<script>
+// Alle Fotos der Seite einsammeln (Galerie + großes Wohnzimmer-Foto)
+var lbFotos = Array.prototype.slice.call(document.querySelectorAll('img.foto'));
+var lbAktuell = 0;
+var lightbox = document.getElementById('lightbox');
+var lbBild   = document.getElementById('lb-bild');
+var lbTitel  = document.getElementById('lb-titel');
+
+// Jedem Foto sagen: "Bei Klick -> öffne mich in der Lightbox"
+lbFotos.forEach(function(foto, index){
+  foto.addEventListener('click', function(){ lbOeffnen(index); });
+});
+
+function lbOeffnen(index){
+  lbAktuell = index;
+  lbBild.src = lbFotos[index].src;
+  lbBild.alt = lbFotos[index].alt;
+  lbTitel.textContent = lbFotos[index].alt;
+  lightbox.classList.add('offen');
+  document.body.style.overflow = 'hidden';   // Seite dahinter nicht scrollen
+}
+
+function lbSchliessen(){
+  lightbox.classList.remove('offen');
+  document.body.style.overflow = '';         // Scrollen wieder erlauben
+}
+
+// richtung ist -1 (zurück) oder +1 (weiter).
+// Der Modulo-Trick (%) sorgt dafür, dass es nach dem letzten Bild
+// wieder beim ersten weitergeht – eine Endlosschleife.
+function lbBlaettern(richtung){
+  lbAktuell = (lbAktuell + richtung + lbFotos.length) % lbFotos.length;
+  lbOeffnen(lbAktuell);
+}
+
+// Klick auf den dunklen Hintergrund (nicht aufs Bild) schließt
+lightbox.addEventListener('click', function(e){
+  if (e.target === lightbox) lbSchliessen();
+});
+
+// Tastatursteuerung: Escape schließt, Pfeiltasten blättern
+document.addEventListener('keydown', function(e){
+  if (!lightbox.classList.contains('offen')) return;
+  if (e.key === 'Escape')     lbSchliessen();
+  if (e.key === 'ArrowLeft')  lbBlaettern(-1);
+  if (e.key === 'ArrowRight') lbBlaettern(1);
+});
+</script>
+
+<!-- ============================================================
+     JAVASCRIPT: SPRACHUMSCHALTUNG
+     1. setLang() setzt das data-lang-Attribut am <html>-Element –
+        das CSS oben blendet dann automatisch die richtige Sprache ein
+     2. Die Wahl wird im Browser gespeichert (localStorage),
+        damit sie beim nächsten Besuch erhalten bleibt
+     3. Beim ersten Besuch wird die Browsersprache des Gasts erkannt
+     ============================================================ -->
+<script>
+function setLang(lang){
+  // 1. Attribut am <html>-Element setzen -> CSS erledigt den Rest
+  document.documentElement.setAttribute('data-lang', lang);
+  document.documentElement.lang = lang;
+
+  // 2. Aktiven Button hervorheben
+  document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+  // 3. Seitentitel (Browser-Tab) mitwechseln
+  document.title = (lang === 'de')
+    ? 'Urchen 29 – Ferienwohnung in Maria Alm am Steinernen Meer'
+    : 'Urchen 29 – Holiday Apartment in Maria Alm, Austria';
+
+  // 4. Wahl für den nächsten Besuch speichern
+  try { localStorage.setItem('urchen29-lang', lang); } catch(e) {}
+}
+
+// Beim Laden: gespeicherte Wahl verwenden, sonst Browsersprache erkennen
+(function(){
+  var saved = null;
+  try { saved = localStorage.getItem('urchen29-lang'); } catch(e) {}
+  if (saved === 'de' || saved === 'en') {
+    setLang(saved);
+  } else {
+    var browserLang = (navigator.language || 'de').toLowerCase();
+    setLang(browserLang.indexOf('de') === 0 ? 'de' : 'en');
+  }
+})();
+</script>
 
 </body>
 </html>
