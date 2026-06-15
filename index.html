@@ -4,8 +4,74 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Urchen 29 – Ferienwohnung in Maria Alm am Steinernen Meer</title>
-<meta name="description" content="Gemütliche Ferienwohnung in Maria Alm am Steinernen Meer – euer Zuhause in der Region Hochkönig. Jetzt anfragen.">
+<meta name="description" content="Gemütliche Ferienwohnung in Maria Alm am Steinernen Meer – euer Zuhause in der Region Hochkönig. Nur 200 m zum Skilift, für 4 Gäste. Jetzt unverbindlich anfragen.">
 
+<!-- ============================================================
+     SEO & TEILEN (Social Media)
+     WICHTIG: Überall, wo "urchen29.at" steht, muss am Ende EURE
+     echte Domain stehen. Falls ihr eine andere Domain nehmt,
+     hier und in sitemap.xml denselben Wert eintragen!
+     ============================================================ -->
+<link rel="canonical" href="https://urchen29.at/">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Anna & Michael Deibl">
+
+<!-- Geo-Tags: helfen bei der regionalen/lokalen Einordnung -->
+<meta name="geo.region" content="AT-5">
+<meta name="geo.placename" content="Maria Alm am Steinernen Meer">
+<meta name="geo.position" content="47.4047;12.9008">
+<meta name="ICBM" content="47.4047, 12.9008">
+
+<!-- Open Graph: bestimmt, wie die Seite aussieht, wenn jemand sie
+     auf WhatsApp, Facebook & Co. teilt (Vorschaubild + Text) -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_AT">
+<meta property="og:site_name" content="Urchen 29">
+<meta property="og:title" content="Urchen 29 – Ferienwohnung in Maria Alm am Steinernen Meer">
+<meta property="og:description" content="Gemütliche Ferienwohnung in Maria Alm – nur 200 m zum Skilift, für 4 Gäste. Jetzt anfragen.">
+<meta property="og:url" content="https://urchen29.at/">
+<meta property="og:image" content="https://urchen29.at/bilder/Main.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- ============================================================
+     STRUKTURIERTE DATEN (schema.org)
+     Dieser Block sagt Google in einer maschinenlesbaren Sprache
+     GENAU, worum es geht: eine Ferienunterkunft in Maria Alm,
+     für 4 Gäste, mit dieser Adresse und diesen Koordinaten.
+     Das kann zu erweiterten Sucheinträgen ("Rich Results") führen.
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "Urchen 29 – Ferienwohnung",
+  "description": "Gemütliche Ferienwohnung in Maria Alm am Steinernen Meer, Region Hochkönig. Für bis zu 4 Gäste, nur 200 m zum Skilift.",
+  "url": "https://urchen29.at/",
+  "image": "https://urchen29.at/bilder/Main.jpg",
+  "email": "urchen29@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Maria Alm am Steinernen Meer",
+    "postalCode": "5761",
+    "addressRegion": "Salzburg",
+    "addressCountry": "AT"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 47.4047,
+    "longitude": 12.9008
+  },
+  "petsAllowed": false,
+  "numberOfRooms": 2,
+  "maximumAttendeeCapacity": 4,
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "WLAN", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Kostenloser Parkplatz", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Balkon", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Skiraum", "value": true }
+  ]
+}
+</script>
 <!-- ============================================================
      SCHRIFTEN (Google Fonts)
      Fraunces  = charaktervolle Display-Schrift für Überschriften
@@ -379,10 +445,6 @@ header{
 }
 @media (max-width:520px){ .feld-reihe{ grid-template-columns:1fr; } }
 
-/* min-width:0 ist der entscheidende Fix: Grid-Felder sind standardmäßig
-   "min-width:auto" und schrumpfen nicht unter ihre Inhaltsbreite.
-   iOS-Datumsfelder haben aber eine feste Mindestbreite -> sie sprengen
-   sonst ihre Spalte und überlappen das Nachbarfeld. */
 .feld{ margin-bottom:14px; min-width:0; }
 .feld label{
   display:block;
@@ -395,7 +457,7 @@ header{
 .feld select,
 .feld textarea{
   width:100%;
-  min-width:0;                 /* erlaubt dem Feld, in seine Spalte zu passen */
+  min-width:0;
   font-family:var(--body);
   font-size:1rem;
   color:var(--tinte);
@@ -403,11 +465,9 @@ header{
   border:none;
   border-radius:10px;
   padding:12px 14px;
-  -webkit-appearance:none;     /* entfernt iOS-Standardlook (Schatten, Rundungen) */
+  -webkit-appearance:none;
   appearance:none;
 }
-/* Datumsfelder zusätzlich auf gleiche Höhe wie die übrigen Felder bringen.
-   iOS gibt ihnen sonst eine abweichende Höhe und Innenausrichtung. */
 .feld input[type="date"]{
   min-height:48px;
   line-height:1.2;
