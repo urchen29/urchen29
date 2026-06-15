@@ -379,7 +379,11 @@ header{
 }
 @media (max-width:520px){ .feld-reihe{ grid-template-columns:1fr; } }
 
-.feld{ margin-bottom:14px; }
+/* min-width:0 ist der entscheidende Fix: Grid-Felder sind standardmäßig
+   "min-width:auto" und schrumpfen nicht unter ihre Inhaltsbreite.
+   iOS-Datumsfelder haben aber eine feste Mindestbreite -> sie sprengen
+   sonst ihre Spalte und überlappen das Nachbarfeld. */
+.feld{ margin-bottom:14px; min-width:0; }
 .feld label{
   display:block;
   font-size:.85rem; font-weight:700;
@@ -391,6 +395,7 @@ header{
 .feld select,
 .feld textarea{
   width:100%;
+  min-width:0;                 /* erlaubt dem Feld, in seine Spalte zu passen */
   font-family:var(--body);
   font-size:1rem;
   color:var(--tinte);
@@ -398,6 +403,14 @@ header{
   border:none;
   border-radius:10px;
   padding:12px 14px;
+  -webkit-appearance:none;     /* entfernt iOS-Standardlook (Schatten, Rundungen) */
+  appearance:none;
+}
+/* Datumsfelder zusätzlich auf gleiche Höhe wie die übrigen Felder bringen.
+   iOS gibt ihnen sonst eine abweichende Höhe und Innenausrichtung. */
+.feld input[type="date"]{
+  min-height:48px;
+  line-height:1.2;
 }
 .feld textarea{ resize:vertical; min-height:110px; }
 .feld input:focus,
