@@ -1,0 +1,52 @@
+name: Belegung aktualisieren
+
+# WANN läuft das hier?
+on:
+  schedule:
+    # Zwei Mal täglich, um 04:17 und 16:17 UTC (Winter 05:17/17:17,
+    # Sommer 06:17/18:17 österreichischer Zeit). Die "17" statt "00"
+    # ist Absicht: zur vollen Stunde ist GitHub am stärksten ausgelastet
+    # und Läufe verzögern sich – ein paar Minuten daneben laufen zuverlässiger.
+    - cron: '17 4,16 * * *'
+  workflow_dispatch:   # zusätzlich ein "Run workflow"-Knopf zum manuellen Auslösen
+
+# Der Workflow muss ins Repo schreiben dürfen (die belegung.ics committen).
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      # 1) Dein Repo auf den Action-Rechner holen
+      - name: Repo auschecken
+        uses: actions/checkout@v4
+
+      # 2) Die Airbnb-.ics herunterladen. Die URL kommt aus dem Secret,
+      #    steht also NICHT hier im Klartext.
+      - name: Airbnb-Kalender holen
+        run: |
+          curl -fsSL \
+            -A "Mozilla/5.0 (compatible; Urchen29-CalendarSync)" \
+            "${{ secrets.AIRBNB_ICAL_URL }}" \
+            -o belegung.ics
+
+      # 3) Sicherheitscheck: Ist das wirklich ein Kalender – oder z.B. eine
+      #    Fehlerseite? Wenn nicht, bricht der Lauf ab und committet nichts.
+      - name: Datei prüfen
+        run: |
+          head -n 1 belegung.ics | grep -q "BEGIN:VCALENDAR" \
+            || { echo "Keine gültige iCal-Datei erhalten – Abbruch."; exit 1; }
+
+      # 4) Nur committen, wenn sich tatsächlich etwas geändert hat.
+      - name: Änderungen sichern
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add belegung.ics
+          if git diff --staged --quiet; then
+            echo "Keine Änderung an der Belegung – nichts zu tun."
+          else
+            git commit -m "Belegung aktualisiert ($(date -u +%Y-%m-%d))"
+            git push
+          fi
