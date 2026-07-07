@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Urchen 29 – Ferienwohnung in Maria Alm am Steinernen Meer</title>
+<title>Urchen29 – Ferienwohnung in Maria Alm am Steinernen Meer</title>
 <meta name="description" content="Gemütliche Ferienwohnung in Maria Alm am Steinernen Meer – euer Zuhause in der Region Hochkönig. Nur 200 m zum Skilift, für 4 Gäste. Jetzt unverbindlich anfragen.">
 
 <!-- ============================================================
@@ -26,8 +26,8 @@
      auf WhatsApp, Facebook & Co. teilt (Vorschaubild + Text) -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_AT">
-<meta property="og:site_name" content="Urchen 29">
-<meta property="og:title" content="Urchen 29 – Ferienwohnung in Maria Alm am Steinernen Meer">
+<meta property="og:site_name" content="Urchen29">
+<meta property="og:title" content="Urchen29 – Ferienwohnung in Maria Alm am Steinernen Meer">
 <meta property="og:description" content="Gemütliche Ferienwohnung in Maria Alm – nur 200 m zum Skilift, für 4 Gäste. Jetzt anfragen.">
 <meta property="og:url" content="https://urchen29.at/">
 <meta property="og:image" content="https://urchen29.at/bilder/Main.jpg">
@@ -44,7 +44,7 @@
 {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
-  "name": "Urchen 29 – Ferienwohnung",
+  "name": "Urchen29 – Ferienwohnung",
   "description": "Gemütliche Ferienwohnung in Maria Alm am Steinernen Meer, Region Hochkönig. Für bis zu 4 Gäste, nur 200 m zum Skilift.",
   "url": "https://urchen29.at/",
   "image": "https://urchen29.at/bilder/Main.jpg",
@@ -62,7 +62,7 @@
     "longitude": 12.9008
   },
   "petsAllowed": false,
-  "numberOfRooms": 2,
+  "numberOfRooms": 1,
   "maximumAttendeeCapacity": 4,
   "amenityFeature": [
     { "@type": "LocationFeatureSpecification", "name": "WLAN", "value": true },
@@ -501,6 +501,98 @@ header{
 .mail-alternative a{ color:#E8B79F; }
 
 /* ============================================================
+   BEWERTUNGEN
+   ============================================================ */
+.bewertungen{ background:var(--sand); }
+.bewert-kopf{ text-align:center; }
+.bewert-score{
+  display:inline-flex; align-items:center; gap:10px;
+  margin-top:6px; margin-bottom:30px;
+  font-family:var(--display);
+}
+.bewert-score .zahl{ font-size:2.4rem; color:var(--tanne); line-height:1; }
+.bewert-score .sterne{ color:var(--terracotta); font-size:1.3rem; letter-spacing:2px; }
+.bewert-score .anzahl{
+  font-family:var(--body); font-size:.9rem; font-weight:600; color:var(--stein);
+}
+.bewert-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+}
+@media (max-width:780px){ .bewert-grid{ grid-template-columns:1fr; } }
+.bewert-karte{
+  background:var(--papier);
+  border-radius:16px;
+  padding:24px;
+  border:1px solid rgba(47,74,60,.1);
+}
+.bewert-karte .text{ font-style:italic; margin-bottom:14px; }
+.bewert-karte .autor{ font-weight:700; font-size:.92rem; color:var(--tanne); }
+.bewert-karte .datum{ font-size:.82rem; color:var(--stein); }
+
+/* ============================================================
+   AKTIVITÄTEN / UMGEBUNG
+   ============================================================ */
+.akt-grid{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:20px;
+  margin-top:30px;
+}
+@media (max-width:680px){ .akt-grid{ grid-template-columns:1fr; } }
+.akt-karte{
+  background:var(--sand);
+  border-radius:16px;
+  padding:24px 26px;
+}
+.akt-karte h3{
+  font-family:var(--display); font-weight:600; font-size:1.2rem;
+  color:var(--tanne); margin-bottom:8px;
+}
+.akt-karte p{ font-size:.95rem; }
+
+/* ============================================================
+   GASTGEBER
+   ============================================================ */
+.gastgeber{ background:var(--papier); }
+.gastgeber .split{ align-items:center; }
+.gastgeber-foto{
+  width:100%; border-radius:18px; object-fit:cover; aspect-ratio:4/5;
+  border:1px solid rgba(47,74,60,.12);
+}
+.gastgeber-foto-platzhalter{
+  width:100%; aspect-ratio:4/5; border-radius:18px;
+  background:linear-gradient(145deg, var(--sand), #E3D7C3);
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; color:var(--stein); font-weight:600; font-size:.9rem;
+  border:2px dashed rgba(126,122,112,.4); padding:20px;
+}
+
+/* ============================================================
+   FAQ (aufklappbare Fragen)
+   ============================================================ */
+.faq{ background:var(--sand); }
+.faq-liste{ max-width:760px; margin:30px auto 0; }
+.faq-item{
+  background:var(--papier);
+  border-radius:12px;
+  margin-bottom:12px;
+  border:1px solid rgba(47,74,60,.1);
+  overflow:hidden;
+}
+/* <details>/<summary> ist natives HTML zum Auf-/Zuklappen – kein JS nötig! */
+.faq-item summary{
+  cursor:pointer; padding:18px 22px;
+  font-weight:700; font-size:1rem; color:var(--tanne);
+  list-style:none; position:relative;
+  padding-right:48px;
+}
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary::after{
+  content:"+"; position:absolute; right:22px; top:16px;
+  font-size:1.4rem; color:var(--terracotta); transition:transform .2s ease;
+}
+.faq-item[open] summary::after{ content:"–"; }
+.faq-item .faq-antwort{ padding:0 22px 20px; font-size:.95rem; }
+
+/* ============================================================
    9) FOOTER
    ============================================================ */
 footer{
@@ -513,6 +605,74 @@ footer .wrap{
   display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
 }
 footer a{ color:rgba(251,247,240,.7); }
+
+/* ============================================================
+   PREISE & VERFÜGBARKEIT
+   Links eine Preis-Karte, rechts ein Belegungskalender, der die
+   Daten aus eurem Airbnb-Kalender (iCal) zieht.
+   ============================================================ */
+.preise{ background:var(--papier); }
+.preise-intro{ max-width:640px; }
+.preis-layout{
+  display:grid; grid-template-columns:0.85fr 1.15fr;
+  gap:40px; align-items:stretch; margin-top:34px;
+}
+@media (max-width:860px){ .preis-layout{ grid-template-columns:1fr; } }
+
+.preis-karte{
+  background:var(--tanne); color:var(--papier);
+  border-radius:18px; padding:32px 30px 34px;
+  display:flex; flex-direction:column;
+}
+.preis-haupt{ display:flex; align-items:baseline; gap:8px; }
+.preis-ab{ font-size:.95rem; color:#E8B79F; font-weight:700; }
+.preis-zahl{ font-family:var(--display); font-size:2.8rem; line-height:1; }
+.preis-einheit{ color:rgba(251,247,240,.7); font-weight:600; }
+.preis-detail{ list-style:none; margin:22px 0 18px; }
+.preis-detail li{
+  display:flex; justify-content:space-between;
+  padding:10px 0; border-bottom:1px solid rgba(251,247,240,.15);
+  font-size:.95rem;
+}
+.preis-detail li span:last-child{ font-weight:700; }
+.preis-hinweise{ list-style:none; margin:26px 0; padding-top:22px; border-top:1px solid rgba(251,247,240,.15); font-size:.9rem; color:rgba(251,247,240,.78); }
+.preis-hinweise li{ padding:3px 0; padding-left:16px; position:relative; }
+.preis-hinweise li::before{ content:"·"; position:absolute; left:4px; color:#E8B79F; }
+.preis-karte .btn{ width:100%; text-align:center; margin-top:auto; }
+
+.kalender{
+  background:var(--sand); border-radius:18px;
+  padding:24px 24px 20px; border:1px solid rgba(47,74,60,.12);
+}
+.kal-kopf{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.kal-titel{ font-family:var(--display); font-size:1.2rem; color:var(--tanne); }
+.kal-nav{
+  background:var(--papier); border:1px solid rgba(47,74,60,.15); cursor:pointer;
+  width:38px; height:38px; border-radius:50%; font-size:1.3rem; color:var(--tanne);
+  display:flex; align-items:center; justify-content:center; transition:background .15s ease;
+}
+.kal-nav:hover{ background:#fff; }
+.kal-nav:disabled{ opacity:.35; cursor:default; }
+.kal-monate{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+@media (max-width:560px){ .kal-monate{ grid-template-columns:1fr; } }
+.kal-monat h4{ font-family:var(--display); font-weight:600; font-size:1rem; color:var(--tanne); text-align:center; margin-bottom:10px; }
+.kal-gitter{ display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
+.kal-wtag{ font-size:.68rem; font-weight:700; color:var(--stein); text-align:center; padding-bottom:4px; text-transform:uppercase; }
+.kal-tag{
+  aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+  font-size:.82rem; border-radius:8px; background:var(--papier); color:var(--tinte);
+}
+.kal-tag.leer{ background:transparent; }
+.kal-frei{ cursor:pointer; }
+.kal-frei:hover{ outline:2px solid var(--terracotta); }
+.kal-belegt{ background:rgba(194,101,74,.15); color:rgba(43,42,38,.35); text-decoration:line-through; }
+.kal-vergangen{ background:transparent; color:rgba(126,122,112,.4); }
+.kal-heute{ box-shadow:inset 0 0 0 2px var(--tanne); font-weight:700; }
+.kal-legende{ display:flex; gap:20px; margin-top:16px; font-size:.85rem; color:var(--stein); }
+.kal-legende i{ display:inline-block; width:13px; height:13px; border-radius:4px; vertical-align:-2px; margin-right:5px; }
+.kal-legende .ll-frei{ background:var(--papier); border:1px solid rgba(47,74,60,.2); }
+.kal-legende .ll-belegt{ background:rgba(194,101,74,.35); }
+.kal-stand{ font-size:.78rem; color:var(--stein); margin-top:12px; }
 </style>
 </head>
 <body>
@@ -526,13 +686,14 @@ footer a{ color:rgba(251,247,240,.7); }
         <path d="M1 19 L9 5 L13 11 L17 3 L25 19 Z" fill="#2F4A3C"/>
         <path d="M17 3 L19.5 8 L17 8 L15.5 6 Z" fill="#C2654A"/>
       </svg>
-      Urchen 29
+      Urchen29
     </a>
     <div class="nav-right">
       <ul>
         <li><a href="#wohnung"><span class="de">Die Wohnung</span><span class="en">The Apartment</span></a></li>
         <li><a href="#galerie"><span class="de">Bilder</span><span class="en">Photos</span></a></li>
         <li><a href="#lage"><span class="de">Lage</span><span class="en">Location</span></a></li>
+        <li><a href="#preise"><span class="de">Preise</span><span class="en">Prices</span></a></li>
         <li><a href="#kontakt"><span class="de">Anfragen</span><span class="en">Enquire</span></a></li>
       </ul>
       <!-- Sprachumschalter: ruft die Funktion setLang() unten auf -->
@@ -554,9 +715,9 @@ footer a{ color:rgba(251,247,240,.7); }
       <span class="en">Arrive.<br>Breathe.<br>Feel at home.</span>
     </h1>
     <p>
-      <span class="de">Urchen 29 ist eure gemütliche Ferienwohnung in Maria Alm –
+      <span class="de">Urchen29 ist eure gemütliche Ferienwohnung in Maria Alm –
       eingerichtet mit Liebe, umgeben von Bergen, das ganze Jahr ein Platz zum Wohlfühlen.</span>
-      <span class="en">Urchen 29 is your cosy holiday apartment in Maria Alm –
+      <span class="en">Urchen29 is your cosy holiday apartment in Maria Alm –
       furnished with love, surrounded by mountains, a place to feel at home all year round.</span>
     </p>
     <a class="btn" href="#kontakt"><span class="de">Jetzt anfragen</span><span class="en">Enquire now</span></a>
@@ -647,6 +808,48 @@ footer a{ color:rgba(251,247,240,.7); }
   </div>
 </section>
 
+<!-- ================= BEWERTUNGEN ================= -->
+<!-- Die Gesamtwertung (4,6 / 5 Sterne, 5 Bewertungen) ist euer ECHTER
+     Airbnb-Stand. Aktualisiert sie, wenn neue Bewertungen dazukommen.
+     Die drei Zitat-Karten sind PLATZHALTER: Bitte durch echte
+     Gästebewertungen ersetzen (z.B. aus eurem Airbnb-Inserat,
+     Reiter "Bewertungen"). Keine Bewertungen erfinden! -->
+<section class="bewertungen" id="bewertungen">
+  <div class="wrap">
+    <div class="bewert-kopf">
+      <span class="eyebrow"><span class="de">Das sagen unsere Gäste</span><span class="en">What our guests say</span></span>
+      <div class="bewert-score">
+        <span class="zahl">4,6</span>
+        <span>
+          <span class="sterne">★★★★★</span><br>
+          <span class="anzahl"><span class="de">von 5 · 5 Bewertungen auf Airbnb</span><span class="en">out of 5 · 5 reviews on Airbnb</span></span>
+        </span>
+      </div>
+    </div>
+
+    <div class="bewert-grid">
+      <!-- Echte Airbnb-Bewertung -->
+      <div class="bewert-karte">
+        <p class="text"><span class="de">„Was für ein angenehmer Aufenthalt in Maria Alm! Die Besitzer waren außergewöhnlich freundlich und serviceorientiert. Die Wohnung war geräumig, mit großem Balkon und schöner Aussicht – ideal gelegen, nahe Skilift und Restaurants. Definitiv ein Ort, um wiederzukommen!"</span><span class="en">"What a pleasant stay in Maria Alm! The owners were exceptionally friendly and service-oriented. The apartment was spacious, with a large balcony and a lovely view – ideally located, close to the ski lift and restaurants. Definitely a place to return to!"</span></p>
+        <div class="autor">Simone</div>
+        <div class="datum"><span class="de">Februar 2026</span><span class="en">February 2026</span></div>
+      </div>
+      <!-- Echte Airbnb-Bewertung -->
+      <div class="bewert-karte">
+        <p class="text"><span class="de">„Der Aufenthalt bei Anna und Michael war einfach fantastisch! Die Wohnung ist schön, gemütlich, sauber, ganz in der Nähe von Lift und Ort – und gleichzeitig in einem ruhigeren Teil. Großartig ausgestattete Küche. Beim nächsten Skiabenteuer kommen wir auf jeden Fall wieder!"</span><span class="en">"Our stay with Anna and Michael was simply fantastic! The apartment is lovely, cosy, clean, right near the lift and the village – and at the same time in a quieter part. Wonderfully equipped kitchen. We'll definitely be back for our next ski adventure!"</span></p>
+        <div class="autor">Natalia</div>
+        <div class="datum"><span class="de">Februar 2026</span><span class="en">February 2026</span></div>
+      </div>
+      <!-- Echte Airbnb-Bewertung -->
+      <div class="bewert-karte">
+        <p class="text"><span class="de">„Perfekter Gastgeber, alles war schön und einfach, wirklich toller Aufenthalt. Einfach zu kommunizieren, schnell mit einer Antwort, immer hilfsbereit. Wir werden auf jeden Fall wiederkommen!"</span><span class="en">"Perfect host, everything was lovely and easy, a really great stay. Easy to communicate with, quick to reply, always helpful. We'll definitely come back!"</span></p>
+        <div class="autor">Nicolai</div>
+        <div class="datum"><span class="de">Jänner 2026</span><span class="en">January 2026</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= LAGE ================= -->
 <section id="lage">
   <div class="wrap">
@@ -678,6 +881,153 @@ footer a{ color:rgba(251,247,240,.7); }
       <li><span><span class="de">Leogang (Skigebiet &amp; Bikepark)</span><span class="en">Leogang (ski area &amp; bike park)</span></span><span><span class="de">ca. 15 Min. mit dem Auto</span><span class="en">approx. 15 min by car</span></span></li>
       <li><span>Salzburg</span><span><span class="de">ca. 1 Std. mit dem Auto</span><span class="en">approx. 1 hr by car</span></span></li>
     </ul>
+  </div>
+</section>
+
+<!-- ================= AKTIVITÄTEN / UMGEBUNG ================= -->
+<!-- Inhalte aus eurem Airbnb-Inserat + Region. Macht sie gern noch
+     persönlicher: konkrete Lift-/Bahnnamen, eure Lieblingswanderung,
+     der beste Wirt im Ort - das verkauft am Ende am besten. -->
+<section id="aktivitaeten">
+  <div class="wrap">
+    <span class="eyebrow"><span class="de">Aktivitäten &amp; Umgebung</span><span class="en">Activities &amp; surroundings</span></span>
+    <h2><span class="de">Was ihr vor der Tür habt</span><span class="en">What's right on your doorstep</span></h2>
+    <div class="akt-grid">
+      <div class="akt-karte">
+        <h3><span class="de">Skifahren im Winter</span><span class="en">Skiing in winter</span></h3>
+        <p><span class="de">Der Natrun-Schlepplift liegt nur rund 200&nbsp;m entfernt – euer Einstieg ins Skigebiet Hochkönig mit über 120&nbsp;km Pisten. Tipp: die legendäre „Königstour" über 35&nbsp;km Pisten. Eure Ausrüstung verstaut ihr im privaten Skiraum.</span><span class="en">The Natrun drag lift is just around 200&nbsp;m away – your gateway to the Hochkönig ski area with over 120&nbsp;km of slopes. Tip: the legendary "Königstour" with 35&nbsp;km of pistes. Store your gear in the private ski room.</span></p>
+      </div>
+      <div class="akt-karte">
+        <h3><span class="de">Wandern &amp; Familienspaß im Sommer</span><span class="en">Hiking &amp; family fun in summer</span></h3>
+        <p><span class="de">Die Natrunbahn bringt euch direkt vom Ort ins Wandergebiet Prinzenberg Natrun – mit Aussichtswegen, Waldrutschenpark, Hochseilgarten sowie Prinzensee und Schlossspielplatz für Kinder.</span><span class="en">The Natrun cable car takes you straight from the village into the Prinzenberg Natrun hiking area – with scenic trails, a forest slide park, a high ropes course, plus the Prinzensee lake and a castle playground for kids.</span></p>
+      </div>
+      <div class="akt-karte">
+        <h3><span class="de">Biken &amp; Baden</span><span class="en">Biking &amp; swimming</span></h3>
+        <p><span class="de">Der Bikepark Leogang (ca. 15&nbsp;km) zählt zu den besten Europas, mit Strecken für jedes Niveau. An heißen Tagen lockt der Ritzensee in Saalfelden mit Badebereich und Liegewiesen.</span><span class="en">The Leogang bike park (approx. 15&nbsp;km) is one of Europe's best, with trails for every level. On hot days, Lake Ritzensee in Saalfelden offers a swimming area and lawns.</span></p>
+      </div>
+      <div class="akt-karte">
+        <h3><span class="de">Essen &amp; Trinken</span><span class="en">Food &amp; drink</span></h3>
+        <p><span class="de">Unsere persönlichen Favoriten: der Almer Bauernkasten (traditionell, nur ein kurzer Spaziergang), Lillis Restaurant für besondere Abende und die Herzogin mit gemütlichem Garten am Dorfplatz.</span><span class="en">Our personal favourites: Almer Bauernkasten (traditional, just a short walk), Lillis Restaurant for special evenings, and Herzogin with its cosy garden on the village square.</span></p>
+      </div>
+      <div class="akt-karte">
+        <h3><span class="de">Versorgung im Ort</span><span class="en">Shops &amp; essentials</span></h3>
+        <p><span class="de">Billa (ca. 700&nbsp;m), MPREIS (ca. 1,2&nbsp;km) und die Bäckerei Café Bauer (ca. 800&nbsp;m) sind fußläufig erreichbar. Das Ortszentrum von Maria Alm liegt rund 5 Gehminuten entfernt.</span><span class="en">Billa (approx. 700&nbsp;m), MPREIS (approx. 1.2&nbsp;km) and the Café Bauer bakery (approx. 800&nbsp;m) are within walking distance. Maria Alm's village centre is about a 5-minute walk away.</span></p>
+      </div>
+      <div class="akt-karte">
+        <h3><span class="de">Kostenlos mobil</span><span class="en">Free local mobility</span></h3>
+        <p><span class="de">Mit dem Guest Mobility Ticket nutzt ihr alle öffentlichen Verkehrsmittel in der Region Salzburg gratis – ideal für autofreie Ausflüge, etwa nach Zell am See oder zum Nationalpark Berchtesgaden.</span><span class="en">With the Guest Mobility Ticket you ride all public transport in the Salzburg region for free – perfect for car-free trips, e.g. to Zell am See or Berchtesgaden National Park.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GASTGEBER ================= -->
+<!-- Der Text ist ein Entwurf, angelehnt an eure Airbnb-Beschreibung.
+     Macht ihn zu EUREM: warum vermietet ihr, was liebt ihr an Maria Alm?
+     Und ersetzt den Foto-Platzhalter durch ein Bild von euch beiden -
+     das schafft mehr Vertrauen als jedes Innenraumfoto. -->
+<section class="gastgeber" id="gastgeber">
+  <div class="wrap split">
+    <img class="gastgeber-foto" src="bilder/Familie.jpg" alt="Anna & Michael, eure Gastgeber">
+    <div>
+      <span class="eyebrow"><span class="de">Eure Gastgeber</span><span class="en">Your hosts</span></span>
+      <h2><span class="de">Anna &amp; Michael</span><span class="en">Anna &amp; Michael</span></h2>
+      <p>
+        <span class="de">Wir vermieten die Urchen29 privat und mit Herzblut. Uns ist wichtig, dass ihr euch vom ersten Moment an wie zuhause fühlt – mit kurzen Wegen, einem entspannten Self-Check-in und einem Plätzchen zum Durchatmen mit Blick auf die Berge. Bei Fragen vor oder während eures Aufenthalts sind wir immer für euch da.</span>
+        <span class="en">We rent out Urchen29 privately and with a lot of heart. It matters to us that you feel at home from the very first moment – with short distances, a relaxed self check-in and a place to breathe with a view of the mountains. If you have any questions before or during your stay, we're always there for you.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<!-- <details>/<summary> klappt ganz ohne JavaScript auf und zu.
+     Prüft die Antworten und passt sie an eure echten Konditionen an
+     (besonders Check-in-Zeiten und Haustiere). -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <span class="eyebrow"><span class="de">Gut zu wissen</span><span class="en">Good to know</span></span>
+    <h2 style="text-align:center;"><span class="de">Häufige Fragen</span><span class="en">Frequently asked questions</span></h2>
+    <div class="faq-liste">
+      <details class="faq-item">
+        <summary><span class="de">Wie funktioniert der Check-in?</span><span class="en">How does check-in work?</span></summary>
+        <div class="faq-antwort"><span class="de">Der Check-in erfolgt eigenständig über eine Schlüsselbox – ihr seid also flexibel. Check-in ist von 16:00 bis 22:00 Uhr möglich, Check-out bis 10:00 Uhr. Die genauen Zugangsdaten schicken wir euch vor der Anreise.</span><span class="en">Check-in is self-service via a key box, so you're flexible. Check-in is possible from 4:00 to 10:00 pm, check-out until 10:00 am. We'll send you the exact access details before arrival.</span></div>
+      </details>
+      <details class="faq-item">
+        <summary><span class="de">Gibt es einen Parkplatz?</span><span class="en">Is there parking?</span></summary>
+        <div class="faq-antwort"><span class="de">Ja, direkt vor dem Haus steht euch ein eigener Parkplatz kostenlos zur Verfügung.</span><span class="en">Yes, a private parking space is available free of charge directly in front of the house.</span></div>
+      </details>
+      <details class="faq-item">
+        <summary><span class="de">Für wie viele Personen ist die Wohnung geeignet?</span><span class="en">How many people can the apartment accommodate?</span></summary>
+        <div class="faq-antwort"><span class="de">Die Wohnung bietet Platz für bis zu 4 Gäste und ist ideal für Paare und kleine Familien.</span><span class="en">The apartment sleeps up to 4 guests and is ideal for couples and small families.</span></div>
+      </details>
+      <details class="faq-item">
+        <summary><span class="de">Sind Haustiere erlaubt?</span><span class="en">Are pets allowed?</span></summary>
+        <div class="faq-antwort"><span class="de">Da in unserer Familie leider jemand eine Allergie hat, ist unsere Wohnung haustierfrei. Wir bitten um Verständnis, dass wir keine Haustiere aufnehmen können.</span><span class="en">Because a family member has an allergy, we're unable to allow pets in the apartment. We kindly ask for your understanding that we're unable to welcome pets.</span></div>
+      </details>
+      <details class="faq-item">
+        <summary><span class="de">Gibt es Hausregeln?</span><span class="en">Are there any house rules?</span></summary>
+        <div class="faq-antwort"><span class="de">Damit sich alle wohlfühlen: bitte keine Schuhe im Wohnbereich, Rauchen nur im Freien, und Ruhezeiten von 22:00 bis 7:00 Uhr.</span><span class="en">So everyone feels comfortable: please no shoes in the living area, smoking outdoors only, and quiet hours from 10:00 pm to 7:00 am.</span></div>
+      </details>
+      <details class="faq-item">
+        <summary><span class="de">Sind Bettwäsche und Handtücher inkludiert?</span><span class="en">Are bed linen and towels included?</span></summary>
+        <div class="faq-antwort"><span class="de">Ja, Bettwäsche und Handtücher sind für euch bereits vorbereitet.</span><span class="en">Yes, bed linen and towels are already prepared for you.</span></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PREISE & VERFÜGBARKEIT ================= -->
+<section class="preise" id="preise">
+  <div class="wrap">
+    <span class="eyebrow"><span class="de">Preise &amp; Verfügbarkeit</span><span class="en">Prices &amp; availability</span></span>
+    <h2><span class="de">Transparent &amp; fair &ndash; am besten direkt buchen</span><span class="en">Transparent &amp; fair &ndash; best booked directly</span></h2>
+    <p class="preise-intro">
+      <span class="de">Bei einer Direktanfrage spart ihr euch die Servicegebühren der Buchungsplattformen. Der Endpreis richtet sich nach Saison, Aufenthaltsdauer und Gästezahl &ndash; die genaue Summe bestätigen wir euch mit eurer Anfrage.</span>
+      <span class="en">Book directly and skip the platform service fees. The final price depends on season, length of stay and number of guests &ndash; we'll confirm the exact amount with your enquiry.</span>
+    </p>
+
+    <div class="preis-layout">
+
+      <!-- ---------- PREIS-KARTE ----------
+           TODO: Ersetzt die Platzhalter "€ 000" durch eure echten Preise.
+           Der große "ab"-Preis sollte eurem niedrigsten Nächtigungspreis
+           entsprechen (meist Nebensaison). -->
+      <div class="preis-karte">
+        <div class="preis-haupt">
+          <span class="preis-ab"><span class="de">ab</span><span class="en">from</span></span>
+          <span class="preis-zahl">€ 130</span>
+          <span class="preis-einheit"><span class="de">/ Nacht</span><span class="en">/ night</span></span>
+        </div>
+
+        <ul class="preis-hinweise">
+          <li><span class="de">Mindestaufenthalt 3 Nächte (Hauptsaison 7 Nächte)</span><span class="en">Minimum stay 3 nights (high season 7)</span></li>
+          <li><span class="de">Bettwäsche &amp; Handtücher inklusive</span><span class="en">Bed linen &amp; towels included</span></li>
+          <li><span class="de">Endreinigung ist ebenfalls im Preis inkludiert</span><span class="en">Final cleaning also included in the price</span></li>
+          <li><span class="de">exklusive Kurtaxe (€ 3,25 pro Person/Nacht ab 15 Jahre)</span><span class="en">excluding tourist tax (€ 3.25 per person/night from age 15)</span></li>
+        </ul>
+
+        <a class="btn" href="#kontakt"><span class="de">Preis anfragen</span><span class="en">Request a quote</span></a>
+      </div>
+
+      <!-- ---------- BELEGUNGSKALENDER ----------
+           Wird per JavaScript (weiter unten) aus eurem Airbnb-Kalender
+           befüllt. Klick auf einen freien Tag übernimmt ihn als Anreise
+           ins Anfrageformular. -->
+      <div class="kalender" id="kalender">
+        <div class="kal-kopf">
+          <button class="kal-nav" id="kal-prev" aria-label="Frühere Monate / Earlier months">&lsaquo;</button>
+          <strong class="kal-titel"><span class="de">Belegung</span><span class="en">Availability</span></strong>
+          <button class="kal-nav" id="kal-next" aria-label="Spätere Monate / Later months">&rsaquo;</button>
+        </div>
+        <div class="kal-monate" id="kal-monate"></div>
+        <div class="kal-legende">
+          <span><i class="ll-frei"></i><span class="de">frei</span><span class="en">available</span></span>
+          <span><i class="ll-belegt"></i><span class="de">belegt</span><span class="en">booked</span></span>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -761,7 +1111,7 @@ footer a{ color:rgba(251,247,240,.7); }
 
     <p class="mail-alternative">
       <span class="de">Oder direkt per E-Mail an</span><span class="en">Or email us directly at</span>
-      <a href="mailto:urchen29@gmail.com?subject=Anfrage%20Urchen%2029">urchen29@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#e29790818a878cd0dba2858f838b8ecc818d8fdd91978088878196dfa38c8490838587c7d0d2b790818a878cc7d0d2d0db"><span class="__cf_email__" data-cfemail="8bfef9e8e3eee5b9b2cbece6eae2e7a5e8e4e6">[email&#160;protected]</span></a>
     </p>
   </div>
 </section>
@@ -769,7 +1119,7 @@ footer a{ color:rgba(251,247,240,.7); }
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="wrap">
-    <span>© 2026 Urchen 29 · Maria Alm am Steinernen Meer</span>
+    <span>© 2026 Urchen29 · Maria Alm am Steinernen Meer</span>
     <span><a href="impressum.html"><span class="de">Impressum</span><span class="en">Legal notice</span></a> · <a href="impressum.html#datenschutz"><span class="de">Datenschutz</span><span class="en">Privacy</span></a></span>
   </div>
 </footer>
@@ -795,7 +1145,7 @@ footer a{ color:rgba(251,247,240,.7); }
      3. Mit den Pfeilen (oder Pfeiltasten) blättert man durch,
         Escape oder ein Klick auf den Hintergrund schließt
      ============================================================ -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Alle Fotos der Seite einsammeln (Galerie + großes Wohnzimmer-Foto)
 var lbFotos = Array.prototype.slice.call(document.querySelectorAll('img.foto'));
 var lbAktuell = 0;
@@ -864,8 +1214,8 @@ function setLang(lang){
 
   // 3. Seitentitel (Browser-Tab) mitwechseln
   document.title = (lang === 'de')
-    ? 'Urchen 29 – Ferienwohnung in Maria Alm am Steinernen Meer'
-    : 'Urchen 29 – Holiday Apartment in Maria Alm, Austria';
+    ? 'Urchen29 – Ferienwohnung in Maria Alm am Steinernen Meer'
+    : 'Urchen29 – Holiday Apartment in Maria Alm, Austria';
 
   // 4. Wahl für den nächsten Besuch speichern
   try { localStorage.setItem('urchen29-lang', lang); } catch(e) {}
@@ -928,6 +1278,144 @@ formular.addEventListener('submit', function(e){
     meldungFehler.classList.add('fehler');
   });
 });
+</script>
+
+<!-- ============================================================
+     JAVASCRIPT: BELEGUNGSKALENDER (Airbnb iCal)
+     So funktioniert's:
+     1. Airbnb liefert pro Inserat einen Kalender-Export im iCal-Format
+        (eine .ics-Datei). Darin stehen alle belegten Zeiträume.
+        Wo ihr den Link findet:
+        Inserat -> Kalender -> Verfügbarkeit -> "Kalender synchronisieren"
+        -> "Kalender exportieren" -> Link kopieren.
+     2. Ein Browser darf Airbnb aus Sicherheitsgründen (CORS) nicht
+        direkt auslesen. Deshalb holen wir die Datei über einen kleinen
+        "CORS-Proxy". Der ist bereits voreingestellt.
+     3. Wir lesen die belegten Tage heraus und färben sie im Kalender.
+        Alle anderen (zukünftigen) Tage gelten als frei.
+     ============================================================ -->
+<script>
+(function(){
+  /* ===== KONFIGURATION – HIER EINTRAGEN ===== */
+  // Eure Airbnb-iCal-URL (siehe Anleitung oben). Leer lassen = Kalender
+  // zeigt nur einen Hinweis, bis ihr den Link eintragt.
+  var AIRBNB_ICAL = 'https://www.airbnb.at/calendar/ical/1556444978113642901.ics?t=53dc85618c344aa780de7dd20d9ca3d2';
+  // CORS-Proxy (Umweg, damit der Browser Airbnb lesen darf).
+  var CORS_PROXY  = 'https://api.allorigins.win/raw?url=';
+  /* =========================================== */
+
+  var monateContainer = document.getElementById('kal-monate');
+  if(!monateContainer) return;
+
+  var belegt = {};                 // 'YYYY-MM-DD' -> true (= belegt)
+  var basis  = new Date(); basis.setDate(1); basis.setHours(0,0,0,0);
+  var minBasis = new Date(basis);  // nicht weiter als der aktuelle Monat zurück
+  var heute  = new Date(); heute.setHours(0,0,0,0);
+
+  var NAMEN = {
+    de:{ monate:['Jänner','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'], wtage:['Mo','Di','Mi','Do','Fr','Sa','So'] },
+    en:{ monate:['January','February','March','April','May','June','July','August','September','October','November','December'], wtage:['Mo','Tu','We','Th','Fr','Sa','Su'] }
+  };
+  function lang(){ return document.documentElement.getAttribute('data-lang') === 'en' ? 'en' : 'de'; }
+  function iso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  var heuteKey = iso(heute);
+
+  // Einen einzelnen Monat als Gitter bauen
+  function renderMonat(jahr, monat){
+    var L = NAMEN[lang()];
+    var wrap = document.createElement('div'); wrap.className = 'kal-monat';
+    var h = document.createElement('h4'); h.textContent = L.monate[monat] + ' ' + jahr; wrap.appendChild(h);
+    var g = document.createElement('div'); g.className = 'kal-gitter';
+    L.wtage.forEach(function(w){ var e=document.createElement('div'); e.className='kal-wtag'; e.textContent=w; g.appendChild(e); });
+    var vor = (new Date(jahr,monat,1).getDay()+6)%7;   // Mo=0 ... So=6
+    for(var i=0;i<vor;i++){ var l=document.createElement('div'); l.className='kal-tag leer'; g.appendChild(l); }
+    var tage = new Date(jahr,monat+1,0).getDate();
+    for(var t=1;t<=tage;t++){
+      var d = new Date(jahr,monat,t);
+      var key = iso(d);
+      var cell = document.createElement('div'); cell.className='kal-tag'; cell.textContent=t;
+      if(key === heuteKey) cell.classList.add('kal-heute');
+      if(d < heute){ cell.classList.add('kal-vergangen'); }
+      else if(belegt[key]){ cell.classList.add('kal-belegt'); }
+      else {
+        cell.classList.add('kal-frei');
+        cell.title = (lang()==='en'?'Available – click to use as check-in':'Frei – Klick übernimmt als Anreise');
+        (function(k){ cell.addEventListener('click', function(){ waehleDatum(k); }); })(key);
+      }
+      g.appendChild(cell);
+    }
+    // Auf immer 6 Wochenzeilen (42 Felder) auffüllen, damit die Höhe
+    // beim Monatswechsel nicht springt.
+    var rest = 42 - (vor + tage);
+    for(var r=0;r<rest;r++){ var lr=document.createElement('div'); lr.className='kal-tag leer'; g.appendChild(lr); }
+    wrap.appendChild(g);
+    return wrap;
+  }
+
+  // Zwei Monate nebeneinander zeigen
+  function render(){
+    monateContainer.innerHTML = '';
+    var y = basis.getFullYear(), m = basis.getMonth();
+    monateContainer.appendChild(renderMonat(y, m));
+    var n = new Date(y, m+1, 1);
+    monateContainer.appendChild(renderMonat(n.getFullYear(), n.getMonth()));
+    document.getElementById('kal-prev').disabled = (basis <= minBasis);
+  }
+
+  // Klick auf freien Tag: als Anreise ins Formular übernehmen + hinscrollen
+  function waehleDatum(key){
+    var el = document.getElementById('f-anreise');
+    if(el){ el.value = key; }
+    location.hash = 'kontakt';
+  }
+
+  document.getElementById('kal-prev').addEventListener('click', function(){ basis.setMonth(basis.getMonth()-1); render(); });
+  document.getElementById('kal-next').addEventListener('click', function(){ basis.setMonth(basis.getMonth()+1); render(); });
+
+  // Sprachwechsel -> Monats-/Wochentagsnamen neu setzen
+  new MutationObserver(render).observe(document.documentElement, { attributes:true, attributeFilter:['data-lang'] });
+
+  // iCal-Datei laden und belegte Tage herauslesen
+  function ladeBelegung(){
+    var stand = document.getElementById('kal-stand');
+    if(!stand) stand = { };   // Hinweiszeile wurde entfernt – Zuweisungen laufen dann ins Leere
+    if(!AIRBNB_ICAL){
+      stand.textContent = lang()==='en'
+        ? 'Live availability appears here once the Airbnb calendar link is added above.'
+        : 'Die Live-Belegung erscheint hier, sobald oben der Airbnb-Kalenderlink eingetragen ist.';
+      return;
+    }
+    fetch(CORS_PROXY + encodeURIComponent(AIRBNB_ICAL))
+      .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+      .then(function(txt){
+        parseICS(txt);
+        render();
+        stand.textContent = (lang()==='en' ? 'Availability as of ' : 'Belegung, Stand ') + iso(new Date());
+      })
+      .catch(function(){
+        stand.textContent = lang()==='en'
+          ? 'Availability could not be loaded right now – please just send an enquiry.'
+          : 'Verfügbarkeit ist gerade nicht abrufbar – bitte einfach anfragen.';
+      });
+  }
+
+  // Sehr schlanker iCal-Parser: pro VEVENT die belegten Tage (DTSTART bis
+  // DTEND) einsammeln. DTEND ist bei Airbnb der Abreisetag (= wieder frei).
+  function parseICS(txt){
+    belegt = {};
+    txt.split('BEGIN:VEVENT').forEach(function(block){
+      var s = /DTSTART[^:]*:(\d{8})/.exec(block);
+      var e = /DTEND[^:]*:(\d{8})/.exec(block);
+      if(!s || !e) return;
+      var d = zuDatum(s[1]), end = zuDatum(e[1]);
+      while(d < end){ belegt[iso(d)] = true; d.setDate(d.getDate()+1); }
+    });
+  }
+  function zuDatum(s){ return new Date(+s.slice(0,4), +s.slice(4,6)-1, +s.slice(6,8)); }
+
+  render();
+  ladeBelegung();
+})();
 </script>
 
 </body>
