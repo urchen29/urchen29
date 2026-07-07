@@ -1124,8 +1124,19 @@ footer a{ color:rgba(251,247,240,.7); }
 
     <p class="mail-alternative">
       <span class="de">Oder direkt per E-Mail an</span><span class="en">Or email us directly at</span>
-      <a href="/cdn-cgi/l/email-protection#e29790818a878cd0dba2858f838b8ecc818d8fdd91978088878196dfa38c8490838587c7d0d2b790818a878cc7d0d2d0db"><span class="__cf_email__" data-cfemail="8bfef9e8e3eee5b9b2cbece6eae2e7a5e8e4e6">[email&#160;protected]</span></a>
+      <!-- Adresse steht bewusst NICHT als Klartext hier (Spam-Schutz).
+           Das Skript unten setzt Link und Anzeigetext zusammen. Ohne
+           JavaScript bleibt der gut lesbare Ersatztext stehen. -->
+      <a id="mail-link" href="#">urchen29 [at] gmail [dot] com</a>
     </p>
+    <script>
+      (function(){
+        var nutzer = 'urchen29', domain = 'gmail.com';
+        var adresse = nutzer + '@' + domain;
+        var a = document.getElementById('mail-link');
+        if(a){ a.href = 'mailto:' + adresse; a.textContent = adresse; }
+      })();
+    </script>
   </div>
 </section>
 
