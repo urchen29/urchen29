@@ -504,26 +504,62 @@ header{
    BEWERTUNGEN
    ============================================================ */
 .bewertungen{ background:var(--sand); }
-.bewert-kopf{ text-align:center; }
+.bewert-kopf{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:24px; flex-wrap:wrap; margin-bottom:28px;
+}
+.bewert-kopf h2{ margin-bottom:10px; }
+
+/* Dezente Wertungszeile: Sterne exakt nach Schnitt gefüllt, keine XXL-Zahl */
 .bewert-score{
-  display:inline-flex; align-items:center; gap:10px;
-  margin-top:6px; margin-bottom:30px;
-  font-family:var(--display);
+  display:flex; align-items:center; gap:9px;
+  font-size:.92rem; font-weight:600; color:var(--stein);
 }
-.bewert-score .zahl{ font-size:2.4rem; color:var(--tanne); line-height:1; }
-.bewert-score .sterne{ color:var(--terracotta); font-size:1.3rem; letter-spacing:2px; }
-.bewert-score .anzahl{
-  font-family:var(--body); font-size:.9rem; font-weight:600; color:var(--stein);
+.sterne-wrap{
+  position:relative; display:inline-block;
+  font-size:1.05rem; letter-spacing:2px; line-height:1;
+  color:rgba(47,74,60,.22);
 }
-.bewert-grid{
-  display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+.sterne-voll{
+  position:absolute; inset:0; overflow:hidden;
+  white-space:nowrap; color:var(--terracotta);
 }
-@media (max-width:780px){ .bewert-grid{ grid-template-columns:1fr; } }
+.bewert-score .zahl{ color:var(--tanne); font-weight:700; }
+
+/* Slider: waagrecht durchblätterbare Zitat-Karten */
+.bewert-nav{ display:flex; gap:8px; }
+.bewert-nav button{
+  width:40px; height:40px; border-radius:50%; cursor:pointer;
+  background:var(--papier); border:1px solid rgba(47,74,60,.15);
+  color:var(--tanne); font-size:1.3rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:background .15s ease, opacity .15s ease;
+}
+.bewert-nav button:hover{ background:#fff; }
+.bewert-nav button:disabled{ opacity:.3; cursor:default; }
+.bewert-track{
+  display:flex; gap:20px; align-items:stretch;
+  overflow-x:auto; scroll-behavior:smooth;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none; -ms-overflow-style:none;
+  padding-bottom:4px;
+}
+.bewert-track::-webkit-scrollbar{ display:none; }
 .bewert-karte{
+  flex:0 0 calc((100% - 40px) / 3);
+  scroll-snap-align:start;
+  display:flex; flex-direction:column;
   background:var(--papier);
   border-radius:16px;
   padding:24px;
   border:1px solid rgba(47,74,60,.1);
+}
+.bewert-karte .text{ flex:1; }
+.bewert-karte .autor{ margin-top:4px; }
+@media (max-width:900px){ .bewert-karte{ flex:0 0 calc((100% - 20px) / 2); } }
+@media (max-width:640px){
+  .bewert-karte{ flex:0 0 88%; }
+  .bewert-kopf{ align-items:flex-start; }
 }
 .bewert-karte .text{ font-style:italic; margin-bottom:14px; }
 .bewert-karte .autor{ font-weight:700; font-size:.92rem; color:var(--tanne); }
@@ -825,17 +861,23 @@ footer a{ color:rgba(251,247,240,.7); }
 <section class="bewertungen" id="bewertungen">
   <div class="wrap">
     <div class="bewert-kopf">
-      <span class="eyebrow"><span class="de">Das sagen unsere Gäste</span><span class="en">What our guests say</span></span>
-      <div class="bewert-score">
-        <span class="zahl">4,71</span>
-        <span>
-          <span class="sterne">★★★★★</span><br>
-          <span class="anzahl"><span class="de">von 5 · 7 Bewertungen auf Airbnb</span><span class="en">out of 5 · 7 reviews on Airbnb</span></span>
-        </span>
+      <div>
+        <h2><span class="de">Das sagen unsere Gäste</span><span class="en">What our guests say</span></h2>
+        <!-- Sterne sind exakt nach dem Schnitt gefüllt: 4,71 / 5 = 94,2 % Breite.
+             Bei neuem Schnitt beide Werte anpassen (Zahl + width in %). -->
+        <div class="bewert-score">
+          <span class="sterne-wrap" aria-hidden="true">★★★★★<span class="sterne-voll" style="width:94.2%">★★★★★</span></span>
+          <span class="zahl">4,71</span>
+          <span><span class="de">von 5 · 7 Bewertungen auf Airbnb</span><span class="en">out of 5 · 7 reviews on Airbnb</span></span>
+        </div>
+      </div>
+      <div class="bewert-nav">
+        <button id="bew-prev" aria-label="Vorherige Bewertung / Previous review">&lsaquo;</button>
+        <button id="bew-next" aria-label="Nächste Bewertung / Next review">&rsaquo;</button>
       </div>
     </div>
 
-    <div class="bewert-grid">
+    <div class="bewert-track" id="bewert-track">
       <!-- Echte Airbnb-Bewertung -->
       <div class="bewert-karte">
         <p class="text"><span class="de">„Was für ein angenehmer Aufenthalt in Maria Alm! Die Besitzer waren außergewöhnlich freundlich und serviceorientiert. Die Wohnung war geräumig, mit großem Balkon und schöner Aussicht – ideal gelegen, nahe Skilift und Restaurants. Definitiv ein Ort, um wiederzukommen!"</span><span class="en">"What a pleasant stay in Maria Alm! The owners were exceptionally friendly and service-oriented. The apartment was spacious, with a large balcony and a lovely view – ideally located, close to the ski lift and restaurants. Definitely a place to return to!"</span></p>
@@ -1302,6 +1344,34 @@ formular.addEventListener('submit', function(e){
     meldungFehler.classList.add('fehler');
   });
 });
+</script>
+
+<!-- ============================================================
+     JAVASCRIPT: BEWERTUNGS-SLIDER
+     Blättert die Zitat-Karten waagrecht durch. Die Pfeile werden am
+     jeweiligen Ende automatisch deaktiviert.
+     ============================================================ -->
+<script>
+(function(){
+  var track = document.getElementById('bewert-track');
+  if(!track) return;
+  var prev = document.getElementById('bew-prev'), next = document.getElementById('bew-next');
+
+  function schritt(){
+    var karte = track.querySelector('.bewert-karte');
+    return karte ? karte.getBoundingClientRect().width + 20 : track.clientWidth;
+  }
+  function status(){
+    var max = track.scrollWidth - track.clientWidth - 2;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max;
+  }
+  prev.addEventListener('click', function(){ track.scrollLeft -= schritt(); });
+  next.addEventListener('click', function(){ track.scrollLeft += schritt(); });
+  track.addEventListener('scroll', status);
+  window.addEventListener('resize', status);
+  status();
+})();
 </script>
 
 <!-- ============================================================
