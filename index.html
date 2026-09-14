@@ -867,8 +867,8 @@ footer a{ color:rgba(251,247,240,.7); }
              Bei neuem Schnitt beide Werte anpassen (Zahl + width in %). -->
         <div class="bewert-score">
           <span class="sterne-wrap" aria-hidden="true">★★★★★<span class="sterne-voll" style="width:94.2%">★★★★★</span></span>
-          <span class="zahl">4,75</span>
-          <span><span class="de">von 5 · 8 Bewertungen auf Airbnb</span><span class="en">out of 5 · 8 reviews on Airbnb</span></span>
+          <span class="zahl">4,82</span>
+          <span><span class="de">von 5 · 11 Bewertungen auf Airbnb</span><span class="en">out of 5 · 11 reviews on Airbnb</span></span>
         </div>
       </div>
       <div class="bewert-nav">
@@ -1138,14 +1138,28 @@ All in all a wonderful experience – one we can definitely recommend and would 
         </div>
       </div>
 
-      <div class="feld">
-        <label for="f-gaeste"><span class="de">Anzahl Gäste</span><span class="en">Number of guests</span></label>
-        <select id="f-gaeste" name="Gaeste" required>
-          <option value="1">1</option>
-          <option value="2" selected>2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
+      <!-- Gästezahl getrennt nach Erwachsenen und Kindern.
+           Die Summe darf 4 nicht überschreiten - das prüft das
+           JavaScript weiter unten beim Absenden. -->
+      <div class="feld-reihe">
+        <div class="feld">
+          <label for="f-erwachsene"><span class="de">Anzahl Erwachsene</span><span class="en">Adults</span></label>
+          <select id="f-erwachsene" name="Erwachsene" required>
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+        <div class="feld">
+          <label for="f-kinder"><span class="de">Anzahl Kinder (bis 15 Jahre)</span><span class="en">Children (up to 15)</span></label>
+          <select id="f-kinder" name="Kinder" required>
+            <option value="0" selected>0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
       </div>
 
       <div class="feld">
