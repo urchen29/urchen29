@@ -714,6 +714,11 @@ footer a{ color:rgba(251,247,240,.7); }
 .kal-tag.leer{ background:transparent; }
 .kal-frei{ cursor:pointer; }
 .kal-frei:hover{ outline:2px solid var(--terracotta); }
+/* Wechseltag: Nacht schon vergeben, aber als Abreisetag noch buchbar.
+   Diagonale = eine Hälfte frei (Abreise möglich), eine Hälfte belegt. */
+.kal-nur-abreise{ cursor:pointer; color:var(--tinte);
+  background:linear-gradient(135deg, var(--papier) 0 50%, rgba(194,101,74,.18) 50% 100%); }
+.kal-nur-abreise:hover{ outline:2px solid var(--terracotta); }
 /* Zustand, solange die Belegung noch geladen wird: neutral & nicht klickbar,
    damit NIE fälschlich "frei" angezeigt wird. */
 .kal-laedt{ background:rgba(126,122,112,.12); color:rgba(126,122,112,.45); animation:kalPuls 1.1s ease-in-out infinite; }
@@ -729,6 +734,7 @@ footer a{ color:rgba(251,247,240,.7); }
 .kal-legende i{ display:inline-block; width:13px; height:13px; border-radius:4px; vertical-align:-2px; margin-right:5px; }
 .kal-legende .ll-frei{ background:var(--papier); border:1px solid rgba(47,74,60,.2); }
 .kal-legende .ll-belegt{ background:rgba(194,101,74,.35); }
+.kal-legende .ll-abreise{ background:linear-gradient(135deg, var(--papier) 0 50%, rgba(194,101,74,.35) 50% 100%); border:1px solid rgba(47,74,60,.2); }
 .kal-stand{ font-size:.78rem; color:var(--stein); margin-top:12px; }
 </style>
 </head>
@@ -1103,6 +1109,7 @@ All in all a wonderful experience – one we can definitely recommend and would 
         <div class="kal-legende">
           <span><i class="ll-frei"></i><span class="de">frei</span><span class="en">available</span></span>
           <span><i class="ll-belegt"></i><span class="de">belegt</span><span class="en">booked</span></span>
+          <span><i class="ll-abreise"></i><span class="de">nur Abreise</span><span class="en">check-out only</span></span>
         </div>
         <p class="kal-hinweis">
           <span class="de">Tipp: 1. Klick = Anreise, 2. Klick = Abreise – der Zeitraum wird automatisch ins Formular übernommen.</span>
@@ -1477,7 +1484,21 @@ formular.addEventListener('submit', function(e){
       if(key === heuteKey) cell.classList.add('kal-heute');
       if(d < heute){ cell.classList.add('kal-vergangen'); }
       else if(!geladen){ cell.classList.add('kal-laedt'); }   // noch keine Daten -> neutral
-      else if(belegt[key]){ cell.classList.add('kal-belegt'); }
+      else if(belegt[key]){
+        // Nacht ab diesem Tag ist belegt. Ist die Nacht DAVOR aber frei, dann ist
+        // dies der Anreisetag der nächsten Buchung = Wechseltag: als ABREISE weiterhin
+        // buchbar (alte Gäste checken vormittags aus, neue kommen nachmittags).
+        if(!belegt[vortagKey(key)]){
+          cell.classList.add('kal-nur-abreise');
+          if(endKey && key === endKey){ cell.classList.add('kal-sel-end'); }
+          cell.title = (lang()==='en'
+            ? 'Changeover day – selectable as check-out only'
+            : 'Wechseltag – nur als Abreise wählbar');
+          (function(k){ cell.addEventListener('click', function(){ waehleDatum(k, true); }); })(key);
+        } else {
+          cell.classList.add('kal-belegt');   // beide Nächte belegt -> komplett blockiert
+        }
+      }
       else {
         cell.classList.add('kal-frei');
         // Markierung des gewählten Zeitraums
@@ -1512,6 +1533,8 @@ formular.addEventListener('submit', function(e){
   // Klick auf freien Tag: 1. Klick = Anreise, 2. Klick = Abreise.
   // Beide werden ins Formular übernommen; danach wird zum Kontakt gescrollt.
   function keyZuDatum(k){ var p = k.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
+  // Schlüssel des Vortags – gebraucht, um Wechseltage (Check-out/Check-in am selben Tag) zu erkennen.
+  function vortagKey(k){ var d = keyZuDatum(k); d.setDate(d.getDate()-1); return iso(d); }
 
   // Sind ALLE Nächte von a (inkl.) bis b (exkl.) frei? b ist der Abreisetag.
   function bereichFrei(aKey, bKey){
@@ -1522,7 +1545,29 @@ formular.addEventListener('submit', function(e){
 
   function setzeFeld(id, wert){ var el = document.getElementById(id); if(el) el.value = wert; }
 
-  function waehleDatum(key){
+  function waehleDatum(key, nurAbreise){
+    // Wechseltag (Anreisetag der nächsten Buchung): darf NUR als Abreise dienen,
+    // nie als Anreise – dazu muss vorher ein gültiger Anreisetag gewählt sein.
+    if(nurAbreise){
+      if(!startKey || endKey || key <= startKey){
+        alert(lang()==='en'
+          ? 'This is a changeover day – selectable only as check-out, after you have picked an arrival date first.'
+          : 'Wechseltag: nur als Abreise wählbar – bitte zuerst einen Anreisetag davor wählen.');
+        return;
+      }
+      if(!bereichFrei(startKey, key)){
+        alert(lang()==='en'
+          ? 'There are already booked days within this range. Please choose a different period.'
+          : 'In diesem Zeitraum liegen bereits belegte Tage. Bitte wähle einen anderen Zeitraum.');
+        return;
+      }
+      endKey = key;
+      setzeFeld('f-abreise', key);
+      render();
+      location.hash = 'kontakt';
+      return;
+    }
+
     // Neue Auswahl beginnen, wenn: noch keine Anreise, bereits ein voller
     // Zeitraum gewählt, oder der Klick liegt vor/auf der bisherigen Anreise.
     if(!startKey || (startKey && endKey) || key <= startKey){
