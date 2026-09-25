@@ -67,10 +67,20 @@
   "numberOfRooms": 1,
   "maximumAttendeeCapacity": 4,
   "amenityFeature": [
-    { "@type": "LocationFeatureSpecification", "name": "WLAN", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Kostenloses WLAN", "value": true },
     { "@type": "LocationFeatureSpecification", "name": "Kostenloser Parkplatz", "value": true },
     { "@type": "LocationFeatureSpecification", "name": "Balkon", "value": true },
-    { "@type": "LocationFeatureSpecification", "name": "Skiraum", "value": true }
+    { "@type": "LocationFeatureSpecification", "name": "Skiraum", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Voll ausgestattete Küche", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Geschirrspüler", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Airfryer", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Waschmaschine", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Trockner", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Babybett", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Hochstuhl", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Kinderspielzeug", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Fernseher mit Apple TV", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Self-Check-in", "value": true }
   ]
 }
 </script>
@@ -401,6 +411,34 @@ header{
   flex-shrink:0;
 }
 @media (max-width:480px){ .amenities{ grid-template-columns:1fr; } }
+/* ============================================================
+   AUSSTATTUNG (Karten nach Kategorien)
+   ============================================================ */
+.aus-grid{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:20px; margin-top:28px;
+}
+@media (max-width:900px){ .aus-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:560px){ .aus-grid{ grid-template-columns:1fr; } }
+.aus-karte{
+  background:#fff; border-radius:18px; padding:22px 22px 18px;
+  border:1px solid rgba(47,74,60,.10);
+}
+.aus-karte h3{
+  font-family:var(--display); font-size:1.12rem; color:var(--tanne);
+  margin-bottom:12px;
+}
+.aus-karte ul{ list-style:none; }
+.aus-karte li{
+  position:relative; padding-left:18px; margin-bottom:8px;
+  font-size:.94rem; line-height:1.4;
+}
+.aus-karte li::before{
+  content:""; position:absolute; left:0; top:.5em;
+  width:7px; height:7px; border-radius:50%; background:var(--terracotta);
+}
+.aus-karte li small{ display:block; font-size:.8rem; color:var(--stein); }
+
 
 /* ============================================================
    6) GALERIE
@@ -457,6 +495,10 @@ header{
   gap:14px;
 }
 @media (max-width:520px){ .feld-reihe{ grid-template-columns:1fr; } }
+/* Adresse: Straße breit + Nr. schmal, PLZ schmal + Ort breit.
+   Bleibt auch am Handy nebeneinander – Nr. und PLZ sind kurz. */
+.feld-reihe.reihe-strasse{ grid-template-columns:3fr 1fr; }
+.feld-reihe.reihe-ort{ grid-template-columns:1fr 2fr; }
 
 .feld{ margin-bottom:14px; min-width:0; }
 .feld label{
@@ -486,6 +528,9 @@ header{
   line-height:1.2;
 }
 .feld textarea{ resize:vertical; min-height:110px; }
+/* Kennzeichnung der Pflichtfelder (Name, E-Mail) */
+.pflicht{ color:var(--terracotta); font-weight:700; }
+.pflicht-hinweis{ font-size:.8rem; color:#E8B79F; margin:4px 0 14px; }
 .feld input:focus,
 .feld select:focus,
 .feld textarea:focus{
@@ -755,6 +800,7 @@ footer a{ color:rgba(251,247,240,.7); }
       <ul>
         <li><a href="#wohnung"><span class="de">Die Wohnung</span><span class="en">The Apartment</span></a></li>
         <li><a href="#galerie"><span class="de">Bilder</span><span class="en">Photos</span></a></li>
+        <li><a href="#ausstattung"><span class="de">Ausstattung</span><span class="en">Amenities</span></a></li>
         <li><a href="#lage"><span class="de">Lage</span><span class="en">Location</span></a></li>
         <li><a href="#preise"><span class="de">Preise</span><span class="en">Prices</span></a></li>
         <li><a href="#kontakt"><span class="de">Anfragen</span><span class="en">Enquire</span></a></li>
@@ -879,6 +925,78 @@ footer a{ color:rgba(251,247,240,.7); }
   </div>
 </section>
 
+<!-- ================= AUSSTATTUNG =================
+     Vollständige Ausstattungsliste, nach Kategorien gruppiert.
+     Neue Punkte: einfach ein <li> in der passenden Karte ergänzen.
+     Zusatzinfo klein darunter: <small>…</small> innerhalb der Sprach-Spans. -->
+<section class="ausstattung" id="ausstattung">
+  <div class="wrap">
+    <span class="eyebrow"><span class="de">Ausstattung</span><span class="en">Amenities</span></span>
+    <h2><span class="de">Alles da für euren Urlaub in Maria Alm</span><span class="en">Everything you need for your stay in Maria Alm</span></h2>
+    <div class="aus-grid">
+      <div class="aus-karte">
+        <h3><span class="de">Für Familien</span><span class="en">For families</span></h3>
+        <ul>
+          <li><span class="de">Babybett &amp; Hochstuhl auf Anfrage <small>Babybett inkl. Bettlaken</small></span><span class="en">Baby cot &amp; high chair on request <small>baby cot incl. sheets</small></span></li>
+          <li><span class="de">Kindergeschirr</span><span class="en">Children's tableware</span></li>
+          <li><span class="de">Kinderbücher &amp; Spielzeug <small>für 0–2 und 2–5 Jahre</small></span><span class="en">Children's books &amp; toys <small>for ages 0–2 and 2–5</small></span></li>
+          <li><span class="de">Brettspiele</span><span class="en">Board games</span></li>
+        </ul>
+      </div>
+      <div class="aus-karte">
+        <h3><span class="de">Küche &amp; Essen</span><span class="en">Kitchen &amp; dining</span></h3>
+        <ul>
+          <li><span class="de">Voll ausgestattete Küche</span><span class="en">Fully equipped kitchen</span></li>
+          <li><span class="de">Herd &amp; Backofen, Backblech</span><span class="en">Hob &amp; oven, baking tray</span></li>
+          <li><span class="de">Geschirrspüler</span><span class="en">Dishwasher</span></li>
+          <li><span class="de">Kühlschrank mit Gefrierfach</span><span class="en">Fridge with freezer compartment</span></li>
+          <li><span class="de">Nespresso-Kaffeemaschine</span><span class="en">Nespresso coffee machine</span></li>
+          <li><span class="de">Wasserkocher &amp; Toaster</span><span class="en">Kettle &amp; toaster</span></li>
+          <li><span class="de">Airfryer</span><span class="en">Air fryer</span></li>
+          <li><span class="de">Töpfe, Pfannen, Öl, Salz &amp; Pfeffer</span><span class="en">Pots, pans, oil, salt &amp; pepper</span></li>
+          <li><span class="de">Geschirr, Besteck &amp; Weingläser</span><span class="en">Crockery, cutlery &amp; wine glasses</span></li>
+        </ul>
+      </div>
+      <div class="aus-karte">
+        <h3><span class="de">Schlafen</span><span class="en">Sleeping</span></h3>
+        <ul>
+          <li><span class="de">Bettwäsche aus Baumwolle</span><span class="en">Cotton bed linen</span></li>
+          <li><span class="de">Zusätzliche Kissen &amp; Decken</span><span class="en">Extra pillows &amp; blankets</span></li>
+          <li><span class="de">Verdunkelung an den Fenstern</span><span class="en">Blackout blinds</span></li>
+          <li><span class="de">Kleiderschrank &amp; Kleiderbügel</span><span class="en">Wardrobe &amp; hangers</span></li>
+        </ul>
+      </div>
+      <div class="aus-karte">
+        <h3><span class="de">Bad &amp; Wäsche</span><span class="en">Bathroom &amp; laundry</span></h3>
+        <ul>
+          <li><span class="de">Föhn</span><span class="en">Hair dryer</span></li>
+          <li><span class="de">Duschgel &amp; Seife</span><span class="en">Shower gel &amp; soap</span></li>
+          <li><span class="de">Waschmaschine &amp; Trockner <small>im Gebäude</small></span><span class="en">Washing machine &amp; dryer <small>in the building</small></span></li>
+        </ul>
+      </div>
+      <div class="aus-karte">
+        <h3><span class="de">Draußen &amp; Winter</span><span class="en">Outdoors &amp; winter</span></h3>
+        <ul>
+          <li><span class="de">Balkon mit Essbereich im Freien</span><span class="en">Balcony with outdoor dining area</span></li>
+          <li><span class="de">Skilift zu Fuß erreichbar <small>rund 200&nbsp;m</small></span><span class="en">Ski lift within walking distance <small>approx. 200&nbsp;m</small></span></li>
+          <li><span class="de">Privater Skiraum mit Skischuhtrockner</span><span class="en">Private ski room with ski boot dryer</span></li>
+          <li><span class="de">Kostenloser Parkplatz am Grundstück</span><span class="en">Free parking on the premises</span></li>
+        </ul>
+      </div>
+      <div class="aus-karte">
+        <h3><span class="de">Komfort &amp; Sicherheit</span><span class="en">Comfort &amp; safety</span></h3>
+        <ul>
+          <li><span class="de">Kostenloses WLAN</span><span class="en">Free Wi-Fi</span></li>
+          <li><span class="de">Fernseher mit Apple TV</span><span class="en">TV with Apple TV</span></li>
+          <li><span class="de">Self-Check-in mit Schlüsselbox</span><span class="en">Self check-in with key box</span></li>
+          <li><span class="de">Rauchmelder</span><span class="en">Smoke detector</span></li>
+          <li><span class="de">Erste-Hilfe-Set</span><span class="en">First aid kit</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= BEWERTUNGEN ================= -->
 <!-- Die Gesamtwertung ist euer ECHTER
      Airbnb-Stand. Aktualisiert sie, wenn neue Bewertungen dazukommen.
@@ -894,8 +1012,8 @@ footer a{ color:rgba(251,247,240,.7); }
              Bei neuem Schnitt beide Werte anpassen (Zahl + width in %). -->
         <div class="bewert-score">
           <span class="sterne-wrap" aria-hidden="true">★★★★★<span class="sterne-voll" style="width:94.2%">★★★★★</span></span>
-          <span class="zahl">4,82</span>
-          <span><span class="de">von 5 · 11 Bewertungen auf Airbnb</span><span class="en">out of 5 · 11 reviews on Airbnb</span></span>
+          <span class="zahl">4,83</span>
+          <span><span class="de">von 5 · 12 Bewertungen auf Airbnb</span><span class="en">out of 5 · 12 reviews on Airbnb</span></span>
         </div>
       </div>
       <div class="bewert-nav">
@@ -1146,22 +1264,51 @@ All in all a wonderful experience – one we can definitely recommend and would 
           action="https://formspree.io/f/xrevobna" method="POST">
 
       <div class="feld">
-        <label for="f-name"><span class="de">Name</span><span class="en">Name</span></label>
+        <label for="f-name"><span class="de">Name</span><span class="en">Name</span> <span class="pflicht" aria-hidden="true">*</span></label>
         <input type="text" id="f-name" name="Name" required autocomplete="name">
       </div>
 
       <div class="feld">
-        <label for="f-email"><span class="de">E-Mail-Adresse</span><span class="en">Email address</span></label>
+        <label for="f-email"><span class="de">E-Mail-Adresse</span><span class="en">Email address</span> <span class="pflicht" aria-hidden="true">*</span></label>
         <input type="email" id="f-email" name="E-Mail" required autocomplete="email">
+      </div>
+
+      <!-- Anschrift der Gäste (für Buchungsbestätigung & Gästeblatt).
+           Wird über FormData automatisch an Formspree mitgeschickt. -->
+      <div class="feld-reihe reihe-strasse">
+        <div class="feld">
+          <label for="f-strasse"><span class="de">Straße</span><span class="en">Street</span></label>
+          <input type="text" id="f-strasse" name="Straße" autocomplete="address-line1">
+        </div>
+        <div class="feld">
+          <label for="f-hausnr"><span class="de">Nr.</span><span class="en">No.</span></label>
+          <input type="text" id="f-hausnr" name="Hausnummer" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="feld-reihe reihe-ort">
+        <div class="feld">
+          <label for="f-plz"><span class="de">PLZ</span><span class="en">Postcode</span></label>
+          <input type="text" id="f-plz" name="PLZ" autocomplete="postal-code" inputmode="text">
+        </div>
+        <div class="feld">
+          <label for="f-ort"><span class="de">Ort</span><span class="en">City</span></label>
+          <input type="text" id="f-ort" name="Ort" autocomplete="address-level2">
+        </div>
+      </div>
+
+      <div class="feld">
+        <label for="f-land"><span class="de">Land</span><span class="en">Country</span></label>
+        <input type="text" id="f-land" name="Land" autocomplete="country-name">
       </div>
 
       <div class="feld-reihe">
         <div class="feld">
-          <label for="f-anreise"><span class="de">Anreise</span><span class="en">Check-in</span></label>
+          <label for="f-anreise"><span class="de">Anreise</span><span class="en">Check-in</span> <span class="pflicht" aria-hidden="true">*</span></label>
           <input type="date" id="f-anreise" name="Anreise" required>
         </div>
         <div class="feld">
-          <label for="f-abreise"><span class="de">Abreise</span><span class="en">Check-out</span></label>
+          <label for="f-abreise"><span class="de">Abreise</span><span class="en">Check-out</span> <span class="pflicht" aria-hidden="true">*</span></label>
           <input type="date" id="f-abreise" name="Abreise" required>
         </div>
       </div>
@@ -1172,7 +1319,7 @@ All in all a wonderful experience – one we can definitely recommend and would 
       <div class="feld-reihe">
         <div class="feld">
           <label for="f-erwachsene"><span class="de">Anzahl Erwachsene</span><span class="en">Adults</span></label>
-          <select id="f-erwachsene" name="Erwachsene" required>
+          <select id="f-erwachsene" name="Erwachsene">
             <option value="1">1</option>
             <option value="2" selected>2</option>
             <option value="3">3</option>
@@ -1181,7 +1328,7 @@ All in all a wonderful experience – one we can definitely recommend and would 
         </div>
         <div class="feld">
           <label for="f-kinder"><span class="de">Anzahl Kinder (bis 15 Jahre)</span><span class="en">Children (up to 15)</span></label>
-          <select id="f-kinder" name="Kinder" required>
+          <select id="f-kinder" name="Kinder">
             <option value="0" selected>0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -1191,13 +1338,15 @@ All in all a wonderful experience – one we can definitely recommend and would 
       </div>
 
       <div class="feld">
-        <label for="f-nachricht"><span class="de">Nachricht (optional)</span><span class="en">Message (optional)</span></label>
+        <label for="f-nachricht"><span class="de">Nachricht</span><span class="en">Message</span></label>
         <textarea id="f-nachricht" name="Nachricht"></textarea>
       </div>
 
       <!-- Honeypot-Falle gegen Spam-Bots: Menschen sehen dieses Feld
            nicht und lassen es leer - Bots füllen es aus und fliegen raus -->
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+      <p class="pflicht-hinweis"><span class="pflicht">*</span> <span class="de">Pflichtfeld</span><span class="en">Required field</span></p>
 
       <button class="btn" type="submit">
         <span class="de">Anfrage senden</span><span class="en">Send enquiry</span>
