@@ -545,6 +545,21 @@ header.menu-offen .menu-btn span:nth-child(3){ transform:translateY(-8px) rotate
   gap:18px; margin-top:30px;
 }
 @media (max-width:720px){ .grid-3{ grid-template-columns:1fr; } }
+/* Weitere Bilder: gleiches Raster, mit Abstand zur Vorschau */
+.galerie-mehr{ margin-top:22px; }
+.galerie-mehr[hidden]{ display:none; }
+.galerie-mehr-knopf{ text-align:center; margin-top:32px; }
+/* Umriss-Button in Tannengrün (für helle Hintergründe) */
+.btn.btn-umriss{
+  background:transparent; color:var(--tanne);
+  border:2px solid var(--tanne); cursor:pointer; font-family:var(--body);
+}
+.btn.btn-umriss:hover{ background:var(--tanne); color:var(--papier); }
+.btn.btn-umriss[hidden]{ display:none; }
+/* Beschriftung wechselt je nach Zustand */
+#galerie-mehr-btn .auf{ display:none; }
+#galerie-mehr-btn[aria-expanded="true"] .zu{ display:none; }
+#galerie-mehr-btn[aria-expanded="true"] .auf{ display:inline; }
 
 /* ============================================================
    7) LAGE
@@ -1036,6 +1051,28 @@ footer a{ color:rgba(251,247,240,.7); }
       <img class="foto" loading="lazy"
            src="bilder/Balkon.jpg"
            alt="Balkon mit Bergblick – Ferienwohnung Hochkönig, Maria Alm">
+    </div>
+
+    <!-- ===== WEITERE BILDER =====
+         Alles hier drin ist zuerst versteckt und erscheint erst nach Klick auf
+         "Weitere Bilder anzeigen". Neues Foto hinzufügen: Datei in den Ordner
+         "bilder/" legen und hier einen Block nach diesem Muster einfügen:
+
+           <img class="foto" loading="lazy" src="bilder/DATEINAME.jpg"
+                alt="Kurze Beschreibung – Ferienwohnung Urchen29 in Maria Alm">
+
+         Der Button zählt die Bilder automatisch und erscheint nur, wenn hier
+         mindestens ein Foto steht. In der Vergrößerung (Lightbox) kann man
+         durch alle Bilder blättern, auch durch diese. -->
+    <div class="grid-3 galerie-mehr" id="galerie-mehr" hidden>
+    </div>
+
+    <div class="galerie-mehr-knopf">
+      <button class="btn btn-umriss" type="button" id="galerie-mehr-btn"
+              aria-expanded="false" aria-controls="galerie-mehr" hidden>
+        <span class="zu"><span class="de">Weitere Bilder anzeigen</span><span class="en">Show more photos</span> (<span class="galerie-anzahl"></span>)</span>
+        <span class="auf"><span class="de">Weniger Bilder anzeigen</span><span class="en">Show fewer photos</span></span>
+      </button>
     </div>
   </div>
 </section>
@@ -1533,7 +1570,7 @@ All in all a wonderful experience – one we can definitely recommend and would 
      3. Mit den Pfeilen (oder Pfeiltasten) blättert man durch,
         Escape oder ein Klick auf den Hintergrund schließt
      ============================================================ -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // Alle Fotos der Seite einsammeln (Galerie + großes Wohnzimmer-Foto)
 var lbFotos = Array.prototype.slice.call(document.querySelectorAll('img.foto'));
 var lbAktuell = 0;
@@ -1591,6 +1628,26 @@ document.addEventListener('keydown', function(e){
      3. Beim ersten Besuch wird die Browsersprache des Gasts erkannt
      ============================================================ -->
 <script>
+/* ---------- Galerie: "Weitere Bilder anzeigen" ----------
+   Klappt die zusätzlichen Fotos auf und zu. Der Button erscheint nur,
+   wenn im versteckten Bereich mindestens ein Foto steht. */
+(function(){
+  var mehr = document.getElementById('galerie-mehr');
+  var btn  = document.getElementById('galerie-mehr-btn');
+  if(!mehr || !btn) return;
+  var anzahl = mehr.querySelectorAll('img.foto').length;
+  if(anzahl === 0) return;                    // keine Zusatzbilder -> kein Button
+  btn.querySelector('.galerie-anzahl').textContent = anzahl;
+  btn.hidden = false;
+  btn.addEventListener('click', function(){
+    var offen = btn.getAttribute('aria-expanded') === 'true';
+    mehr.hidden = offen;
+    btn.setAttribute('aria-expanded', offen ? 'false' : 'true');
+    // Beim Zuklappen zurück zur Galerie, sonst steht man plötzlich weiter unten
+    if(offen){ document.getElementById('galerie').scrollIntoView({behavior:'smooth'}); }
+  });
+})();
+
 /* ---------- Google-Maps-Karte erst auf Klick laden ----------
    Bis zum Klick wird keine Verbindung zu Google aufgebaut. */
 (function(){
