@@ -571,17 +571,6 @@ header.menu-offen .menu-btn span:nth-child(3){ transform:translateY(-8px) rotate
   margin-top:30px;
 }
 .lage-karte iframe{ display:block; width:100%; height:380px; border:0; }
-/* Platzhalter vor dem Laden der Karte */
-.karte-hinweis{
-  min-height:380px; padding:32px 24px;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  gap:14px; text-align:center;
-  background:var(--sand, #F1E9DC); color:var(--tanne);
-}
-.karte-hinweis p{ max-width:440px; font-size:.92rem; color:var(--tinte); margin:0; }
-.karte-hinweis p a{ color:var(--terracotta); }
-.karte-extern{ font-size:.9rem; font-weight:600; color:var(--tanne); }
-.karte-hinweis .btn{ border:none; cursor:pointer; font-family:var(--body); }
 .lage-liste{ list-style:none; margin-top:22px; }
 .lage-liste li{
   display:flex; justify-content:space-between;
@@ -1212,28 +1201,13 @@ All in all a wonderful experience – one we can definitely recommend and would 
       perfect base for hiking, cycling and lake swimming in summer.</span>
     </p>
 
-    <!-- GOOGLE-MAPS-KARTE (Zwei-Klick-Lösung, datenschutzfreundlich):
-         Die Karte wird erst geladen, wenn der Gast auf "Karte laden" tippt.
-         Vorher fließen keine Daten an Google. Die Karten-Adresse steht in
-         data-src (bei Änderung: Google Maps -> Teilen -> Karte einbetten ->
-         die URL aus src="…" hier in data-src einsetzen). -->
-    <div class="lage-karte" id="lage-karte"
-         data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4595.695318915328!2d12.900525513036206!3d47.40307580188787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4776e343faafa2b3%3A0x925b81f3a9043e25!2sFerienwohnung%20Urchen%2029!5e1!3m2!1sde!2sat!4v1781249814527!5m2!1sde!2sat">
-      <div class="karte-hinweis">
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" stroke="currentColor" stroke-width="1.8"/>
-          <circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.8"/>
-        </svg>
-        <p>
-          <span class="de">Beim Laden der Karte werden Daten (u.&nbsp;a. eure IP-Adresse) an Google übertragen.
-            Mehr dazu in der <a href="impressum.html#datenschutz">Datenschutzerklärung</a>.</span>
-          <span class="en">Loading the map transfers data (including your IP address) to Google.
-            See our <a href="impressum.html#datenschutz">privacy policy</a>.</span>
-        </p>
-        <button class="btn" type="button" id="karte-laden"><span class="de">Karte laden</span><span class="en">Load map</span></button>
-        <a class="karte-extern" href="https://www.google.com/maps/search/?api=1&amp;query=Ferienwohnung%20Urchen%2029%20Maria%20Alm" target="_blank" rel="noopener">
-          <span class="de">oder direkt in Google Maps öffnen ↗</span><span class="en">or open in Google Maps ↗</span></a>
-      </div>
+    <!-- GOOGLE-MAPS-KARTE (direkt eingebettet).
+         Karte ändern: Google Maps -> Teilen -> Karte einbetten -> die URL aus
+         src="…" hier einsetzen. loading="lazy" lädt die Karte erst, wenn man
+         in ihre Nähe scrollt. -->
+    <div class="lage-karte">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4595.695318915328!2d12.900525513036206!3d47.40307580188787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4776e343faafa2b3%3A0x925b81f3a9043e25!2sFerienwohnung%20Urchen%2029!5e1!3m2!1sde!2sat!4v1781249814527!5m2!1sde!2sat" title="Google Maps – Lage der Ferienwohnung Urchen29" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
     </div>
 
     <!-- Entfernungen laut Airbnb-Inserat -->
@@ -1645,23 +1619,6 @@ document.addEventListener('keydown', function(e){
     btn.setAttribute('aria-expanded', offen ? 'false' : 'true');
     // Beim Zuklappen zurück zur Galerie, sonst steht man plötzlich weiter unten
     if(offen){ document.getElementById('galerie').scrollIntoView({behavior:'smooth'}); }
-  });
-})();
-
-/* ---------- Google-Maps-Karte erst auf Klick laden ----------
-   Bis zum Klick wird keine Verbindung zu Google aufgebaut. */
-(function(){
-  var box = document.getElementById('lage-karte');
-  var btn = document.getElementById('karte-laden');
-  if(!box || !btn) return;
-  btn.addEventListener('click', function(){
-    var f = document.createElement('iframe');
-    f.src = box.getAttribute('data-src');
-    f.title = 'Google Maps – Lage der Ferienwohnung Urchen29';
-    f.setAttribute('allowfullscreen', '');
-    f.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
-    box.innerHTML = '';
-    box.appendChild(f);
   });
 })();
 
