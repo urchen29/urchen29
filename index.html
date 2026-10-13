@@ -89,9 +89,20 @@
      Fraunces  = charaktervolle Display-Schrift für Überschriften
      Nunito Sans = ruhige, gut lesbare Schrift für Fließtext
      ============================================================ -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Schriften liegen im eigenen Ordner "fonts/" (selbst gehostet).
+     Dadurch wird beim Seitenaufruf keine Verbindung zu Google aufgebaut. -->
+<style>
+@font-face{ font-family:"Fraunces"; font-style:normal; font-weight:400; font-display:swap;
+  src:url("fonts/fraunces-latin-400-normal.woff2") format("woff2"); }
+@font-face{ font-family:"Fraunces"; font-style:normal; font-weight:600; font-display:swap;
+  src:url("fonts/fraunces-latin-600-normal.woff2") format("woff2"); }
+@font-face{ font-family:"Nunito Sans"; font-style:normal; font-weight:400; font-display:swap;
+  src:url("fonts/nunito-sans-latin-400-normal.woff2") format("woff2"); }
+@font-face{ font-family:"Nunito Sans"; font-style:normal; font-weight:600; font-display:swap;
+  src:url("fonts/nunito-sans-latin-600-normal.woff2") format("woff2"); }
+@font-face{ font-family:"Nunito Sans"; font-style:normal; font-weight:700; font-display:swap;
+  src:url("fonts/nunito-sans-latin-700-normal.woff2") format("woff2"); }
+</style>
 
 <style>
 /* ============================================================
@@ -545,6 +556,17 @@ header.menu-offen .menu-btn span:nth-child(3){ transform:translateY(-8px) rotate
   margin-top:30px;
 }
 .lage-karte iframe{ display:block; width:100%; height:380px; border:0; }
+/* Platzhalter vor dem Laden der Karte */
+.karte-hinweis{
+  min-height:380px; padding:32px 24px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:14px; text-align:center;
+  background:var(--sand, #F1E9DC); color:var(--tanne);
+}
+.karte-hinweis p{ max-width:440px; font-size:.92rem; color:var(--tinte); margin:0; }
+.karte-hinweis p a{ color:var(--terracotta); }
+.karte-extern{ font-size:.9rem; font-weight:600; color:var(--tanne); }
+.karte-hinweis .btn{ border:none; cursor:pointer; font-family:var(--body); }
 .lage-liste{ list-style:none; margin-top:22px; }
 .lage-liste li{
   display:flex; justify-content:space-between;
@@ -1153,13 +1175,28 @@ All in all a wonderful experience – one we can definitely recommend and would 
       perfect base for hiking, cycling and lake swimming in summer.</span>
     </p>
 
-    <!-- GOOGLE-MAPS-KARTE EINBETTEN:
-         1. Auf Google Maps eure Adresse suchen
-         2. "Teilen" → "Karte einbetten" → HTML kopieren
-         3. Den <iframe>-Code hier statt des Kommentars einfügen
-    -->
-    <div class="lage-karte">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4595.695318915328!2d12.900525513036206!3d47.40307580188787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4776e343faafa2b3%3A0x925b81f3a9043e25!2sFerienwohnung%20Urchen%2029!5e1!3m2!1sde!2sat!4v1781249814527!5m2!1sde!2sat" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <!-- GOOGLE-MAPS-KARTE (Zwei-Klick-Lösung, datenschutzfreundlich):
+         Die Karte wird erst geladen, wenn der Gast auf "Karte laden" tippt.
+         Vorher fließen keine Daten an Google. Die Karten-Adresse steht in
+         data-src (bei Änderung: Google Maps -> Teilen -> Karte einbetten ->
+         die URL aus src="…" hier in data-src einsetzen). -->
+    <div class="lage-karte" id="lage-karte"
+         data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4595.695318915328!2d12.900525513036206!3d47.40307580188787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4776e343faafa2b3%3A0x925b81f3a9043e25!2sFerienwohnung%20Urchen%2029!5e1!3m2!1sde!2sat!4v1781249814527!5m2!1sde!2sat">
+      <div class="karte-hinweis">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.8"/>
+        </svg>
+        <p>
+          <span class="de">Beim Laden der Karte werden Daten (u.&nbsp;a. eure IP-Adresse) an Google übertragen.
+            Mehr dazu in der <a href="impressum.html#datenschutz">Datenschutzerklärung</a>.</span>
+          <span class="en">Loading the map transfers data (including your IP address) to Google.
+            See our <a href="impressum.html#datenschutz">privacy policy</a>.</span>
+        </p>
+        <button class="btn" type="button" id="karte-laden"><span class="de">Karte laden</span><span class="en">Load map</span></button>
+        <a class="karte-extern" href="https://www.google.com/maps/search/?api=1&amp;query=Ferienwohnung%20Urchen%2029%20Maria%20Alm" target="_blank" rel="noopener">
+          <span class="de">oder direkt in Google Maps öffnen ↗</span><span class="en">or open in Google Maps ↗</span></a>
+      </div>
     </div>
 
     <!-- Entfernungen laut Airbnb-Inserat -->
@@ -1554,6 +1591,23 @@ document.addEventListener('keydown', function(e){
      3. Beim ersten Besuch wird die Browsersprache des Gasts erkannt
      ============================================================ -->
 <script>
+/* ---------- Google-Maps-Karte erst auf Klick laden ----------
+   Bis zum Klick wird keine Verbindung zu Google aufgebaut. */
+(function(){
+  var box = document.getElementById('lage-karte');
+  var btn = document.getElementById('karte-laden');
+  if(!box || !btn) return;
+  btn.addEventListener('click', function(){
+    var f = document.createElement('iframe');
+    f.src = box.getAttribute('data-src');
+    f.title = 'Google Maps – Lage der Ferienwohnung Urchen29';
+    f.setAttribute('allowfullscreen', '');
+    f.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+    box.innerHTML = '';
+    box.appendChild(f);
+  });
+})();
+
 /* ---------- Handy-Menü (Hamburger) ----------
    Öffnet/schließt die Menüpunkte. Schließt sich automatisch beim
    Antippen eines Menüpunkts, mit Escape oder bei Tipp außerhalb. */
@@ -1693,21 +1747,16 @@ formular.addEventListener('submit', function(e){
         Wo ihr den Link findet:
         Inserat -> Kalender -> Verfügbarkeit -> "Kalender synchronisieren"
         -> "Kalender exportieren" -> Link kopieren.
-     2. Ein Browser darf Airbnb aus Sicherheitsgründen (CORS) nicht
-        direkt auslesen. Deshalb holen wir die Datei über einen kleinen
-        "CORS-Proxy". Der ist bereits voreingestellt.
+     2. Ein Browser darf Airbnb aus Sicherheitsgründen (CORS) nicht direkt
+        auslesen. Deshalb holt eine GitHub Action die Datei einmal täglich
+        und legt sie als "belegung.ics" neben diese Seite. Die Seite liest
+        nur diese eigene Datei – kein externer Dienst, kein Airbnb-Link im
+        Quellcode.
      3. Wir lesen die belegten Tage heraus und färben sie im Kalender.
         Alle anderen (zukünftigen) Tage gelten als frei.
      ============================================================ -->
 <script>
 (function(){
-  /* ===== KONFIGURATION – HIER EINTRAGEN ===== */
-  // Eure Airbnb-iCal-URL (siehe Anleitung oben). Leer lassen = Kalender
-  // zeigt nur einen Hinweis, bis ihr den Link eintragt.
-  var AIRBNB_ICAL = 'https://www.airbnb.at/calendar/ical/1556444978113642901.ics?t=53dc85618c344aa780de7dd20d9ca3d2';
-  // CORS-Proxy (Umweg, damit der Browser Airbnb lesen darf).
-  var CORS_PROXY  = 'https://api.allorigins.win/raw?url=';
-  /* =========================================== */
 
   var monateContainer = document.getElementById('kal-monate');
   if(!monateContainer) return;
@@ -1868,16 +1917,11 @@ formular.addEventListener('submit', function(e){
   function setStand(t){ var el = document.getElementById('kal-stand'); if(el) el.textContent = t; }
   function holen(url){ return fetch(url).then(function(r){ if(!r.ok) throw 0; return r.text(); }); }
 
-  // iCal-Datei laden und belegte Tage herauslesen.
-  // Reihenfolge: 1) lokale Datei belegung.ics (schnell, kein Proxy – wird per
-  // GitHub Action einmal täglich aktualisiert)  2) Notfall: live über CORS-Proxy.
+  // Belegung aus der eigenen Datei belegung.ics laden
+  // (wird per GitHub Action einmal täglich aus Airbnb aktualisiert).
   function ladeBelegung(){
     setStand(lang()==='en' ? 'Loading availability…' : 'Belegung wird geladen…');
     holen('belegung.ics')
-      .catch(function(){                       // lokale Datei fehlt/404 -> Proxy versuchen
-        if(!AIRBNB_ICAL) throw 0;
-        return holen(CORS_PROXY + encodeURIComponent(AIRBNB_ICAL));
-      })
       .then(function(txt){
         parseICS(txt);
         geladen = true;                        // ab jetzt echte frei/belegt-Anzeige

@@ -3,14 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Impressum &amp; Datenschutz – Urchen 29, Maria Alm</title>
+<title>Impressum &amp; Datenschutz – Urchen29, Maria Alm</title>
 <meta name="robots" content="noindex, follow">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
+/* Schriften selbst gehostet (Ordner "fonts/") – keine Verbindung zu Google */
+@font-face{ font-family:"Fraunces"; font-weight:400; font-display:swap; src:url("fonts/fraunces-latin-400-normal.woff2") format("woff2"); }
+@font-face{ font-family:"Fraunces"; font-weight:600; font-display:swap; src:url("fonts/fraunces-latin-600-normal.woff2") format("woff2"); }
+@font-face{ font-family:"Nunito Sans"; font-weight:400; font-display:swap; src:url("fonts/nunito-sans-latin-400-normal.woff2") format("woff2"); }
+@font-face{ font-family:"Nunito Sans"; font-weight:600; font-display:swap; src:url("fonts/nunito-sans-latin-600-normal.woff2") format("woff2"); }
+@font-face{ font-family:"Nunito Sans"; font-weight:700; font-display:swap; src:url("fonts/nunito-sans-latin-700-normal.woff2") format("woff2"); }
+
 /* Gleiche Design-Variablen wie auf der Hauptseite */
 :root{
   --tanne:      #2F4A3C;
@@ -105,7 +108,7 @@ footer a{ color:rgba(251,247,240,.7); }
 
 <header>
   <div class="wrap">
-    <a class="logo" href="index.html">Urchen 29</a>
+    <a class="logo" href="index.html">Urchen29</a>
     <a class="back" href="index.html">← Zurück zur Startseite</a>
   </div>
 </header>
@@ -114,7 +117,7 @@ footer a{ color:rgba(251,247,240,.7); }
 <div class="wrap">
 
   <h1>Impressum &amp; Datenschutz</h1>
-  <p class="untertitel">Rechtliche Informationen zur Website der Ferienwohnung Urchen 29</p>
+  <p class="untertitel">Rechtliche Informationen zur Website der Ferienwohnung Urchen29</p>
 
   <!-- ============================================================
        IMPRESSUM
@@ -137,20 +140,13 @@ footer a{ color:rgba(251,247,240,.7); }
   <p>E-Mail: <a href="mailto:urchen29@gmail.com">urchen29@gmail.com</a></p>
 
   <h3>Unternehmensgegenstand</h3>
-  <p>Private Vermietung einer Ferienwohnung („Urchen 29") in
+  <p>Private Vermietung einer Ferienwohnung („Urchen29") in
      5761 Maria Alm am Steinernen Meer, Österreich.</p>
   <p>Registrierungsnummer der Unterkunft (Land Salzburg): 50612-0001191-2025</p>
 
   <h3>Grundlegende Richtung der Website (§ 25 MedienG)</h3>
-  <p>Diese Website dient der Präsentation der Ferienwohnung Urchen 29
+  <p>Diese Website dient der Präsentation der Ferienwohnung Urchen29
      sowie der Kontaktaufnahme für Buchungsanfragen.</p>
-
-  <h3>Online-Streitbeilegung</h3>
-  <p>Verbraucher haben die Möglichkeit, Beschwerden an die
-     Online-Streitbeilegungsplattform der EU zu richten:
-     <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr</a>.
-     Sie können Beschwerden auch direkt an die oben angegebene
-     E-Mail-Adresse richten.</p>
 
   <h3>Haftung für Inhalte und Links</h3>
   <p>Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt.
@@ -175,17 +171,36 @@ footer a{ color:rgba(251,247,240,.7); }
   <p>Verantwortlich für die Datenverarbeitung auf dieser Website sind die
      im Impressum genannten Diensteanbieter (Kontaktdaten siehe oben).</p>
 
-  <h3>Kontakt mit uns</h3>
-  <p>Wenn Sie per E-Mail Kontakt mit uns aufnehmen (z.&nbsp;B. für eine
-     Buchungsanfrage), werden die von Ihnen übermittelten Daten (Name,
-     E-Mail-Adresse, Inhalt der Nachricht) zwecks Bearbeitung der Anfrage
-     und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten
-     geben wir nicht ohne Ihre Einwilligung weiter. Rechtsgrundlage ist
-     Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO (Vertragsanbahnung) bzw.
-     lit.&nbsp;f DSGVO (berechtigtes Interesse an der Beantwortung Ihrer
-     Anfrage). </p>
+  <h3>Anfrageformular und Kontakt per E-Mail</h3>
+  <p>Wenn Sie uns über das Anfrageformular oder per E-Mail kontaktieren,
+     verarbeiten wir die von Ihnen angegebenen Daten zur Bearbeitung Ihrer
+     Anfrage und für allfällige Anschlussfragen. Über das Formular sind das:
+     Name, E-Mail-Adresse, An- und Abreisedatum, Anzahl der Erwachsenen und
+     Kinder sowie – freiwillig – Ihre Anschrift (Straße, Hausnummer, PLZ, Ort,
+     Land) und Ihre Nachricht.</p>
+  <p>Name, E-Mail-Adresse sowie An- und Abreisedatum sind als Pflichtfelder
+     gekennzeichnet; ohne diese Angaben können wir Ihre Anfrage nicht
+     beantworten. Alle übrigen Angaben sind freiwillig.</p>
+  <p>Rechtsgrundlage ist Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO
+     (Durchführung vorvertraglicher Maßnahmen auf Ihre Anfrage). Wir geben
+     Ihre Daten nicht an Dritte weiter, außer an die nachfolgend genannten
+     Dienstleister, soweit dies technisch notwendig ist.</p>
+  <p>Für das Formular nutzen wir den Dienst Formspree (Formspree, Inc.,
+     595 Pacific Ave, Floor 4, San Francisco, CA 94133, USA). Formspree
+     nimmt die Formulardaten entgegen und leitet sie per E-Mail an uns
+     weiter; dabei werden die Daten in den USA verarbeitet. Die Übermittlung
+     erfolgt auf Grundlage von EU-Standardvertragsklauseln
+     (Art.&nbsp;46 Abs.&nbsp;2 lit.&nbsp;c DSGVO). Weitere Informationen finden
+     Sie in der
+     <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener">Datenschutzerklärung von Formspree</a>.</p>
 
- <p>Für das Anfrageformular nutzen wir den Dienst Formspree (Formspree Inc., 595 Pacific Ave, Floor 4, San Francisco, CA 94133, USA). Die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, Reisedaten, Nachricht) werden zur Übermittlung an uns durch Formspree verarbeitet und dabei in die USA übertragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung). Weitere Informationen finden Sie in der Datenschutzerklärung von Formspree.</p>
+  <h3>Speicherdauer</h3>
+  <p>Anfragen, aus denen keine Buchung entsteht, löschen wir spätestens
+     12&nbsp;Monate nach der letzten Korrespondenz. Kommt eine Buchung
+     zustande, bewahren wir die dafür nötigen Daten so lange auf, wie es
+     gesetzliche Aufbewahrungspflichten vorsehen (insbesondere 7&nbsp;Jahre
+     nach §&nbsp;132 Bundesabgabenordnung sowie die Vorgaben des
+     Meldegesetzes für das Gästeverzeichnis).</p>
 
   <h3>Hosting und Server-Logfiles</h3>
  <p>Diese Website wird gehostet bei GitHub Pages, einem Dienst der GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA.
@@ -193,32 +208,42 @@ footer a{ color:rgba(251,247,240,.7); }
     technische Zugriffsdaten (z.&nbsp;B. IP-Adresse, Datum und Uhrzeit des
     Zugriffs, Browsertyp) in Server-Logfiles verarbeitet. Diese Daten dienen
     der Sicherstellung eines störungsfreien Betriebs und der Verbesserung
-    der Sicherheit (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO).</p>
+    der Sicherheit (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO). GitHub ist
+    unter dem EU-US Data Privacy Framework zertifiziert; die Übermittlung in
+    die USA stützt sich auf den Angemessenheitsbeschluss der EU-Kommission
+    (Art.&nbsp;45 DSGVO).</p>
 
-  <h3>Google Fonts</h3>
-  <p>Diese Website verwendet Schriftarten von Google Fonts (Anbieter:
-     Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland).
-     Beim Aufruf der Seite lädt Ihr Browser die Schriften von Google-Servern;
-     dabei wird Ihre IP-Adresse an Google übertragen. Rechtsgrundlage ist
-     unser berechtigtes Interesse an einer einheitlichen Darstellung der
-     Website (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO). Weitere
-     Informationen finden Sie in der
-     <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Datenschutzerklärung von Google</a>.</p>
+  <h3>Schriftarten und Belegungskalender</h3>
+  <p>Die auf dieser Website verwendeten Schriftarten sowie die Daten des
+     Belegungskalenders (ausschließlich freie und belegte Zeiträume, keine
+     Gästedaten) werden direkt von unserem eigenen Webspace geladen. Dabei
+     wird keine Verbindung zu Servern Dritter hergestellt.</p>
 
   <h3>Google Maps</h3>
-  <p>Diese Website bindet eine Karte des Dienstes Google Maps ein (Anbieter:
-     Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland),
-     um Ihnen die Lage der Ferienwohnung anzuzeigen. Beim Laden der Karte
-     wird Ihre IP-Adresse an Google übertragen; Google kann dabei Cookies
-     setzen bzw. Daten in die USA übermitteln. Rechtsgrundlage ist unser
-     berechtigtes Interesse an einer ansprechenden Darstellung des Standorts
-     (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO). Weitere Informationen
-     finden Sie in der
+  <p>Zur Darstellung der Lage der Ferienwohnung kann auf dieser Website eine
+     Karte des Dienstes Google Maps angezeigt werden (Anbieter: Google Ireland
+     Limited, Gordon House, Barrow Street, Dublin 4, Irland). Die Karte wird
+     <strong>erst geladen, wenn Sie auf „Karte laden" klicken</strong>. Vorher
+     werden keine Daten an Google übertragen.</p>
+  <p>Nach dem Klick überträgt Ihr Browser unter anderem Ihre IP-Adresse an
+     Google; Google kann dabei Cookies setzen und Daten auch in die USA
+     übermitteln. Google ist unter dem EU-US Data Privacy Framework
+     zertifiziert. Rechtsgrundlage ist Ihre Einwilligung durch den Klick
+     (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO, §&nbsp;165 Abs.&nbsp;3 TKG 2021).
+     Die Einwilligung gilt nur für den jeweiligen Seitenaufruf; ohne Klick
+     wird die Karte nicht geladen. Weitere Informationen finden Sie in der
      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Datenschutzerklärung von Google</a>.</p>
 
-  <h3>Cookies</h3>
-  <p>Diese Website selbst setzt keine eigenen Cookies. Eingebundene
-     Drittdienste (insbesondere Google Maps) können jedoch Cookies setzen.</p>
+  <h3>Cookies und lokaler Speicher</h3>
+  <p>Diese Website setzt selbst keine Cookies. Damit Ihre gewählte Sprache
+     (Deutsch/Englisch) beim nächsten Besuch erhalten bleibt, speichern wir
+     diese Einstellung im lokalen Speicher Ihres Browsers (localStorage).
+     Dabei werden keine personenbezogenen Daten an uns übertragen; die
+     Speicherung ist für die von Ihnen gewählte Funktion unbedingt
+     erforderlich (§&nbsp;165 Abs.&nbsp;3 TKG 2021). Sie können sie jederzeit
+     über die Einstellungen Ihres Browsers löschen.</p>
+  <p>Cookies von Google können erst gesetzt werden, nachdem Sie die Karte
+     aktiv geladen haben (siehe „Google Maps").</p>
 
   <h3>Ihre Rechte</h3>
   <p>Ihnen stehen grundsätzlich die Rechte auf Auskunft, Berichtigung,
@@ -230,14 +255,14 @@ footer a{ color:rgba(251,247,240,.7); }
      <a href="https://www.dsb.gv.at" target="_blank" rel="noopener">www.dsb.gv.at</a>.</p>
 
   <p style="margin-top:40px; color:var(--stein); font-size:.9rem;">
-    Stand: Juni 2026</p>
+    Stand: Oktober 2026</p>
 
 </div>
 </main>
 
 <footer>
   <div class="wrap">
-    © 2026 Urchen 29 · Maria Alm am Steinernen Meer ·
+    © 2026 Urchen29 · Maria Alm am Steinernen Meer ·
     <a href="index.html">Zur Startseite</a>
   </div>
 </footer>
